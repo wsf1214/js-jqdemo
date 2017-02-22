@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>滚动</title>
+	<style>
+		*{margin:0; padding:0;}
+    	ul,li{list-style: none;}
+    	#news{width:600px;margin:50px auto;background:#ccc;border: 1px solid #555;overflow: hidden;}
+    	#news .title{height:100px;line-height: 100px;text-align: center;font-size: 2em;color:green}
+    	#news .n-content{background: #fff;overflow: hidden;height:360px;}
+    	#con1,#con2{width:500px;height:360px;margin: 0 auto;}
+    	#news .n-content li{height:40px;line-height: 40px;font-size: 14px;text-indent: 1em;border-bottom: 1px dashed #aaa;}
+    	#news .n-content li a{color:#555;}
+    	#news .n-content li a:hover{color:red;}
+	</style>
+	<script>
+
+	</script>
+	<script>
+		window.onload=function(){
+
+			var content=document.getElementById('n-content');
+			var con1=document.getElementById("con1");
+			var con2=document.getElementById("con2");
+			con2.innerHTML=con1.innerHTML;//复制一份con1
+			
+			var time=10;//滚动速度
+			var timer=null;//定时器
+			//scrollTop 滚动出父级窗口外的高度
+			var myscroll=function(){
+				timer=setInterval(function scrollUp(){//把函数封装，放在外面，不起作用
+					if(content.scrollTop>=con1.offsetHeight){//如果滚动出去的高度等于列表con1的高度时，设置滚动出去的高度为0；否则继续递加
+						content.scrollTop=0;
+					}else{
+						//console.log(1)
+						content.scrollTop++;
+					}
+				},time);
+			}
+
+			//载入网页立即执行
+			myscroll();
+
+			//鼠标划入 暂停
+			content.onmouseover=function(){
+				clearInterval(timer);
+			}
+			//鼠标划出 继续
+			content.onmouseout=function(){
+				myscroll();
+			}
+		}
+	</script>
+</head>
+<body>
+	<!--新闻列表滚动-->
+	<div id="news">
+		<h3 class="title">新闻头条</h3>
+		<div id="n-content" class="n-content">
+			<ul id="con1">
+				<li><a href="">1、半场战报：权健2-0梅州</a></li>
+				<li><a href="">2、半场战报：新疆0-2恒丰智诚 </a></li>
+				<li><a href="">3、半场战报：一方0-2黄海</a></li>
+				<li><a href="">4、两座城市的对决，尤文发布战米兰宣传片</a></li>
+				<li><a href="">5、曲晓辉被红牌罚下，大连一方十人应战</a></li>
+				<li><a href="">6、中国女足vs乌兹别克斯坦女足：99年小将首发</a></li>
+				<li><a href="">7、图集：天津权健vs梅州客家，看台气氛火爆</a></li>
+				<li><a href="">8、解析国青惨败：留洋球员处境艰难，选拔主帅太草率</a></li>
+				<li><a href="">9、预热西甲焦点战，巴伦西亚盘点对阵巴萨的精彩进球</a></li>
+			</ul>
+			<ul id="con2">
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

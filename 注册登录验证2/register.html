@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>用户注册</title>
+		<script type="text/javascript" src="js/toast.js" ></script>
+		<script type="text/javascript" src="js/register.js" ></script>
+		
+	</head>
+	<body>
+		<form  action="#" method="post" onsubmit="return check()">
+			<!--
+            	用户名
+            	密码        密码显示级别
+            	确认密码
+            	邮箱
+            	真实姓名
+            	手机号码
+            	验证码
+            -->
+			用户名:<input id="username" type="text" name="username" /><br/>
+			密码：<input id="pass1" type="password" name="pass1" onblur="validatePassRange()" /><span id="passrange"></span><br/>
+			确认密码:<input id="pass2" type="password" name="pass2" /><br/>
+			邮箱:<input id="email" type="text" name="email" /><br/>
+			真实姓名:<input id="realname" type="text" name="realname" /><br/>
+			手机号码:<input id="tel" type="text" name="tel" /><br />
+			验证码：<input id="mycheckcode" type="text" name="validatecode"/><span id="checkcode" onclick="createValidateCode()">HHHH</span><br/>
+			<input type="submit" value="注册" /><input type="reset" />
+			
+		</form>
+	</body>
+</html>

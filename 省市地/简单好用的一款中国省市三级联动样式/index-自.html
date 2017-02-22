@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>省市地三联</title>
+		<script src="js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			ul,
+			ol {
+				list-style: none;
+			}
+			#box{
+				width: 450px;
+				margin:20px 0 0 300px;
+				min-height: 100px;
+				
+			}
+			.txt {
+				display: block;
+				width: 200px;
+				height: 20px;
+				line-height: 20px;
+			}
+			
+			.box {
+				width: 450px;
+				display: block;
+				border: 2px solid #eee;
+				padding: 5px;
+				position: relative;
+				margin: 2px 0;
+				display: none;
+			}
+			.top{
+				position: relative;
+				width: 100%;
+				height: 34px;
+				border-bottom: 2px solid #56b4f8;
+			}
+			.top li{
+				width:  80px;
+				height: 34px;
+				float: left;
+				text-align: center;
+				line-height: 34px;
+				color: #888;
+				cursor: pointer;
+			}
+			.top .top_li_active{
+				background: #56b4f8;
+				color: #fff;
+			}
+			.close{
+				border: 1px solid #56b4f8;
+			    border-radius: 3px;
+			    color: #56b4f8;
+			    cursor: pointer;
+			    height: 15px;
+			    line-height: 15px;
+			    position: absolute;
+			    right: 10px;
+			    text-align: center;
+			    top: 10px;
+			    width: 15px;	
+			}
+			.bottom{
+				width: 100%;
+				padding-top:5px ;
+				min-height: 10px;
+				display: inline-block;
+				display: none;
+			}
+			.bottom_active{
+				display: inline-block;
+			}
+			.bottom li{
+				width: 85px;
+				height: 35px;
+				margin: 3px 0 0 4px;
+				color: #666;
+				background: #f5f5f5;
+				float: left;
+				cursor: pointer;
+				text-align: center;
+				line-height: 35px;
+				font-size: 12px;
+				overflow: hidden;
+			}
+			.bottom .bottom_li_active{
+				background: #56b4f8;
+				color: #fff;
+			}
+			.bottom .li_active{
+				background: #56b4f8;
+				color: #fff;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="box">
+			<input class="txt" type="text" />
+			<div class="box">
+				<ul class="top">
+					<li class="top_li_active">省</li>
+					<li>市</li>
+					<li>县</li>
+					<span class="close" title="关闭">
+						x
+					</span>
+				</ul>
+				<ul class="bottom bottom_active"></ul>
+				
+				<ul class="bottom"></ul>
+				
+				<ul class="bottom"></ul>
+				
+			</div>
+		</div>
+		
+	</body>
+</html>
+<script type="text/javascript">
+		alert(1)
+	//出现省
+	$.getJSON("city.json",function  (data) {
+		$(".txt").focus(function  () {
+			
+			$(".box").show()
+		})
+		var province=data.province;
+		var area=data.area[0];
+		console.log(province);
+		var pHtml="";
+		for(var i=0;i<province.length;i++){
+			pHtml+='<li id="'+
+						province[i].id+
+						'"title="'+
+						province[i].name+
+						'">'+
+						province[i].name+
+						'</li>'
+		}
+		$(".bottom:eq(0)").html(pHtml);
+		$(".bottom:eq(0) li").click(function  () {
+			$(this).addClass("li_active").siblings().removeClass("li_active");
+			var txt0=$(this).text();
+			$(".txt").val(txt0);
+			var cHtml="";
+			for(var i=0;i<province.length;i++){
+				if($(this).attr("id")==province[i].id){
+					var city=province[i].city;
+					for(var j=0;j<city.length;j++){
+						cHtml+='<li id="'+
+								city[j].id+
+								'"title="'+
+								city[j].name+
+								'">'+
+								city[j].name+
+								'</li>'
+					}
+					$(".bottom:eq(1)").html(cHtml);
+					liFunction();
+					$(".top li").eq(1).trigger("click");
+					$(".bottom:eq(1) li").click(function () {
+						$(this).addClass("li_active").siblings().removeClass("li_active");
+						var txt1=$(this).text();
+						$(".txt").val(txt0+"-"+txt1);
+						$(".top li").eq(2).trigger("click");
+						var cityErea=[];
+						for(var k=0;k<area.length;k++){
+							if($(this).attr("id")==area[k].pid){
+								cityErea.push(area[k]);
+							}
+						}
+						var eHtml="";
+						for(var y=0;y<cityErea.length;y++){
+							eHtml+='<li id="'+
+									cityErea[y].id+
+									'"title="'+
+									cityErea[y].name+
+									'">'+
+									cityErea[y].name+
+									'</li>'
+						}
+						$(".bottom:eq(2)").html(eHtml);
+						liFunction();
+						$(".bottom:eq(2) li").click(function  () {
+							$(this).addClass("li_active").siblings().removeClass("li_active");
+							var txt2=$(this).text();
+							$(".txt").val(txt0+"-"+txt1+"-"+txt2);
+							$(".box").hide();
+						})
+						
+					})
+				}
+			}
+		})
+		$(".top li").click(function  () {
+			$(".top li").removeClass("top_li_active");
+			$(this).addClass("top_li_active");
+			$(".bottom").removeClass("bottom_active");
+			$(".bottom").eq($(this).index()).addClass("bottom_active");
+		})
+		function liFunction () {
+			$(".bottom li:not('.li_active')").mouseenter(function  () {
+				$(this).addClass("bottom_li_active");
+			})
+			$(".bottom li:not('.li_active')").mouseleave(function  () {
+				$(this).removeClass("bottom_li_active");
+			})
+		}
+		liFunction();	
+	})
+	$(".close").click(function  () {
+		$(".box").hide();
+	})
+
+</script>

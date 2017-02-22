@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			
+			.search_list {
+				width: 400px;
+				min-height: 200px;
+				border: 1px solid gray;
+				display: none;
+			}
+			
+			.search_list a {
+				color: #000;
+				text-decoration: none;
+			}
+		</style>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+	</head>
+
+	<body>
+
+		<input type="text" id="search_text" placeholder="请输入关键词" />
+		<ul id="search_list" class="search_list">
+			<li>
+				<a href=""></a>
+			</li>
+		</ul>
+
+	</body>
+
+</html>
+<script>
+	$(function() {
+		// 搜索框
+		var oTxt = document.getElementById('search_text');
+		oTxt.onkeyup = function() {
+			var val = this.value;
+			var oScript = document.createElement('script');
+
+			oScript.src = "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=" + val + "&cb=hhl"
+			document.body.appendChild(oScript);
+			document.body.removeChild(oScript);
+		}
+
+	})
+
+	//搜索函数------放在入口函数外边
+	function hhl(data) {
+		//alert(data.s[0])
+		var oList = document.getElementById('search_list');
+		var html = ''
+		if(data.s.length > 0) {
+			for(var i = 0; i < data.s.length; i++) {
+				html += '<li><a href="https://www.baidu.com/s?wd=' + data.s[i] + '" target="_blank">' + data.s[i] + '</a></li>'
+			}
+			oList.style.display = 'block';
+			oList.innerHTML = html;
+
+		} else {
+			oList.style.display = 'none';
+		}
+	}
+</script>

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>滚动</title>
+	<style>
+		*{margin:0; padding:0;}
+    	ul,li{list-style: none;}
+    	#news{width:600px;margin:50px auto;background:#ccc;border: 1px solid #555;overflow: hidden;}
+    	#news .title{height:100px;line-height: 100px;text-align: center;font-size: 2em;color:green}
+    	#news .n-content{background: #fff;overflow: hidden;height:200px;}
+    	#con1,#con2{width:500px;height:360px;margin: 0 auto;}
+    	#news .n-content li{height:40px;line-height: 40px;font-size: 14px;text-indent: 1em;border-bottom: 1px dashed #aaa;}
+    	#news .n-content li a{color:#555;}
+    	#news .n-content li a:hover{color:red;}
+	</style>
+	<script>
+
+	</script>
+	<script>
+		window.onload=function(){
+			var content=document.getElementById('n-content');
+			var con1=document.getElementById("con1");
+			var con2=document.getElementById("con2");
+			var liHeight=41;
+			con2.innerHTML=con1.innerHTML;
+			content.scrollTop=0;
+			var speed=10;//设置滚动时间
+			var timer=timer2=null;
+			var delay=1000;//设置超时时间
+			var startMove=function (){//执行此函数，则开始运动
+				content.scrollTop++;//首先加 1 ，content.scrollTop的值不为 0
+				myscroll();//列表滚动函数
+			}
+
+			function myscroll(){
+				timer=setInterval(function(){//不断向上滚动 间歇调用 速度speed
+					scrollUp();//
+				},speed);
+			}
+			//为scrollUp函数 设置停顿 时间为 delay
+			function scrollUp(){
+				if(content.scrollTop%liHeight==0){
+					clearInterval(timer);
+					timer2=setTimeout(function(){
+						startMove();//从新开始执行函数
+					},delay);
+				}else{
+					content.scrollTop++;
+					if(content.scrollTop>=con1.offsetHeight){
+						content.scrollTop=0;
+					}
+				}
+			}
+
+			//打开网页时 延时delay秒后执行
+			setTimeout(function(){
+				startMove()
+			},delay);
+
+			//s鼠标划入停止滚动
+			content.onmouseenter=function(){
+				clearInterval(timer);
+				clearTimeout(timer2);
+			}
+			//鼠标划出滚动
+			content.onmouseleave=function(){
+				myscroll();
+			}
+		}
+	</script>
+</head>
+<body>
+	<!--新闻列表滚动-->
+	<div id="news">
+		<h3 class="title">新闻头条</h3>
+		<div id="n-content" class="n-content">
+			<ul id="con1">
+				<li><a href="">1、粤媒：里皮团队全面接手国足</a></li>
+				<li><a href="http://www.dongqiudi.com/article/238091">2、中超闯进一位网红女老板，海归文筱婷最正确的就是放权 </a></li>
+				<li><a href="">3、“只为精彩”苏宁发布对阵恒大海报</a></li>
+				<li><a href="http://www.dongqiudi.com/article/238110">4、恒大战苏宁海报：继续奋战</a></li>
+				<li><a href="">5、外交部发言人陆慷：希望中国足球能持久取得进步</a></li>
+				<li><a href="">6、中国女足1-0丹麦女足获永川邀请赛三连冠，任桂辛世界波制胜</a></li>
+				<li><a href="">7、官方：恒大与斯科拉里续约</a></li>
+				<li><a href="">8、再续前缘，李铁确认成为国家队助理教练</a></li>
+				<li><a href="http://www.dongqiudi.com/article/237823">9、2016年金球奖30人名单：C罗梅西领衔，皇马共有6人入选</a></li>
+			</ul>
+			<ul id="con2">
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

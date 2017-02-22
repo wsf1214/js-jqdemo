@@ -1,0 +1,54 @@
+﻿<html>
+	<head>
+		<title>DOM</title>
+		<script src="move.js"></script>
+		<style>
+		div{width:100px;height:50px;margin:10px;background:red;}
+		</style>
+		<script>
+		onload=function(){
+		var box = document.getElementsByTagName("div");
+		for(var i = 0;i<box.length;i++){
+			box[i].timer=null;
+			box[i].onmouseover=function(){
+				startMove(this,1000)
+			}
+			box[i].onmouseout=function(){
+				startMove(this,100)
+			}
+		}
+		}
+		
+		var timer=null;
+		function startMove(obj,iTager){
+			clearInterval(obj.timer);
+			obj.timer=setInterval(function(){
+				
+				var speed=(iTager-obj.offsetWidth)/6;
+				speed=speed>0?Math.ceil(speed):Math.floor(speed);
+				if(iTager==obj.offsetWidth){
+					clearInterval(obj.timer);
+				}
+				else{
+					obj.style.width=obj.offsetWidth+speed+"px";
+				}
+			},30)
+		
+		
+		}
+		
+		
+		</script>
+	
+	</head>
+<body>
+<div></div>
+<div></div>
+<div></div>
+
+
+
+
+</body>
+	
+</html>

@@ -1,0 +1,38 @@
+*{margin:0;padding:0;}
+body{background:url(../img/hh.jpg) no-repeat left top;background-attachment:fixed;background-size:100% 100%;}
+#ball{width:500px;height:500px;position:absolute;left:300px;top:70px;}
+
+/*给box添加3d属性 定一个位置稍微倾斜一下 方便看出纬线  rotateX ratateY rotateZ 分别是旋转xyz轴*/
+.box{width:500px;height:500px;transform-style:preserve-3d;position:relative;
+	transform:rotateZ(-20deg) rotateX(-20deg) rotateY(0);
+	animation:spin 0s linear infinite;/*自定义动画 spin:旋转*/
+	}
+	@keyframes spin{/*关键帧定义：执行上面的动画*/
+		0%{transform:rotateZ(-20deg) rotateX(-20deg) rotateY(0);}
+		100%{transform:rotateZ(-20deg) rotateX(-20deg) rotateY(360deg);}
+		}
+		
+/*每个div都绝对定位并变成圆形*/
+.box div{width:500px;height:500px;border:10px solid yellow;border-radius:50%;position:absolute;}
+
+/*将每个围绕Y轴旋转的x轴方向的div旋转一定的角度*/
+.box .x1{transform:rotateY(0deg);}/*3d变换：旋转*/
+.box .x2{transform:rotateY(20deg);}
+.box .x3{transform:rotateY(40deg);}
+.box .x4{transform:rotateY(60deg);}
+.box .x5{transform:rotateY(80deg);}
+.box .x6{transform:rotateY(100deg);}
+.box .x7{transform:rotateY(120deg);}
+.box .x8{transform:rotateY(140deg);}
+.box .x9{transform:rotateY(160deg);}
+
+/*将每个围绕X轴旋转的y轴方向的div旋转一定的角度  移位并缩放一定的比例 scale:规模比例*/
+.box .y1{transform:rotateX(90deg) translateZ(200px) scale(0.6);}
+.box .y4{transform:rotateX(90deg) translateZ(50px) scale(0.96);}
+.box .y5{transform:rotateX(90deg) translateZ(0px) scale(1);}
+.box .y6{transform:rotateX(90deg) translateZ(-50px) scale(0.96);}
+.box .y7{transform:rotateX(90deg) translateZ(-100px) scale(0.9);}
+.box .y8{transform:rotateX(90deg) translateZ(-150px) scale(0.8);}
+.box .y9{transform:rotateX(90deg) translateZ(-200px) scale(0.6);}
+.box .y2{transform:rotateX(90deg) translateZ(150px) scale(0.8);}
+.box .y3{transform:rotateX(90deg) translateZ(100px) scale(0.9);}

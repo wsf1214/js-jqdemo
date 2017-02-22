@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>QQ微信</title>
+		<script src="jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			*{margin:0;padding: 0;}
+			ul,ol{list-style: none;}
+			.right_bottom{position: fixed;right: 20px;bottom: 50px;width: 44px ;height: 165px;}
+			.weChat,.service,.goTop{background: url(img/c65fc928aca6.png) no-repeat left top;margin-bottom:3px ;width: 44px;height: 52px;}
+			.weChat{background-position: 0 -798px;}
+			.saomiao{width: 0px;height:0px;position: absolute;background: url(img/saomiao.jpg);left: 0px;top: 42px;background-size: cover;opacity: 0;box-shadow: 5px 5px 5px #B3B3B3,-5px 0 5px #B3B3B3;}
+			.service{background-position: 0 -426px;}
+			.goTop{background-position: 0 -674px;}
+			
+		</style>
+	</head>
+	<body>
+		<ul class="right_bottom">
+			<li class="weChat">
+				<div class="saomiao"></div>
+			</li>
+			<li class="service"></li>
+			<li class="goTop"></li>
+			
+		</ul>
+	</body>
+</html>
+<script type="text/javascript">
+	$(".right_bottom li").each(function (index) {
+		var y = parseFloat($(this).css("background-position-y"));
+		var y1 = y-62;
+		$(this).mouseenter(function () {
+			$(this).stop().animate({"background-position-y":y1})
+		});
+		$(this).mouseleave(function () {
+			$(this).stop().animate({"background-position-y":y})
+		});
+	})
+	$(".right_bottom li:first").mouseenter(function () {
+		$(".saomiao").stop().animate({"width":160,"height":180,"left":-160,"top":-128,"opacity":1},"slow");
+	})
+	$(".right_bottom li:first").mouseleave(function () {
+		$(".saomiao").stop().animate({"width":0,"height":0,"left":0,"top":52,"opacity":0},"slow");
+	})
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</script>

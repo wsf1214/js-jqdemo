@@ -1,0 +1,50 @@
+﻿<html>
+   <head>
+      <title>控制div的移动</title>
+	
+	
+	 
+		
+	
+	<style>
+	#box1{width:500px;height:500px;background:yellow;margin:0 auto;position:relative;}
+	.box2{width:16px;height:16px;background:red;position:absolute;left:240px;top:240px;text-align:center;color:#fff;
+	border-radius:8px;font-size: 7px;line-height: 16px;}
+	#btnDiv{width:100px;height:100px;margin:0 auto;position:absolute;left:500px;}
+	#btn1,#btn2,#btn3,#btn4,#btn5,#btn6{width:100px;height:30px;margin:0 auto;}
+	</style>
+	
+	
+	  
+   </head>
+   
+   <body>
+	<div id="box1">
+		<div class="box2" name="box">1
+		</div>
+		<div class="box2" name="box">2
+		</div>
+		<div class="box2" name="box">3
+		</div>
+		<div class="box2" name="box">4
+		</div>
+		<div class="box2" name="box">5
+		</div>
+		
+		
+		<div id="btnDiv">
+		<input type="button" value="开始" id ="btn1" />
+		<input type="button" value="重置" id ="btn3" />
+		<input type="button" value="+" id ="btn4" />
+		<input type="button" value="+10" id ="btn2" />
+		<input type="button" value="-" id ="btn5" />
+		<input type="button" value="-10" id ="btn6" />
+		</div>
+	</div>
+	
+
+   </body>
+
+
+</html>
+<script src="tanboll.js"></script>

@@ -1,0 +1,64 @@
+﻿<html>
+	<head>
+		<title>DOM</title>
+		<script>
+		onload= function(){
+			var myBox=document.getElementsByTagName("div");
+			var myInput= document.getElementsByTagName("input");
+			
+			var arr=[];
+			for(var i = 0;i<myBox.length;i++){
+				arr.push([getStyle(myBox[i],"left"),getStyle(myBox[i],"top")]);
+			};
+			
+			myInput[0].onclick=function(){				
+				arr.push(arr[0]);
+				arr.shift();
+				for(var i=0;i<myBox.length;i++){
+					myBox[i].style.left=arr[i][0];
+					myBox[i].style.top=arr[i][1];
+				}
+			}
+			myInput[1].onclick=function(){				
+				arr.unshift(arr[arr.length-1]);
+				arr.pop();
+				for(var i=0;i<myBox.length;i++){
+					myBox[i].style.left=arr[i][0];
+					myBox[i].style.top=arr[i][1];
+				}
+			}
+			
+			
+		
+			function getStyle(obj,styles){
+				if(obj.currentStyle){
+					return obj.currentStyle[styles];
+				}
+				else{
+				return  getComputedStyle(obj,false)[styles];
+				}
+			
+			}
+		}
+		
+		</script>
+		<style>
+		.box1{width:100px;height:100px;background:red;position:absolute;left:100px;
+		top:100px;}
+		.box2{width:100px;height:100px;background:green;position:absolute;left:250px;
+		top:50px;}
+		.box3{width:100px;height:100px;background:yellow;position:absolute;left:400px;
+		top:100px;}
+		
+		
+		</style>
+
+	
+	</head>
+<body>
+<div class="box1">1</div>
+<div class="box2">2</div>
+<div class="box3">3</div>
+<input type="button" class="pre" value="左" />
+<input type="button" class="next" value="右" />
+</body>

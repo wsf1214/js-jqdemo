@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>滚动距离</title>
+		<style>
+			*{margin: 0;padding: 0;}
+			ul,ol{list-style: none;}
+			img{display: block;border: none;}
+			.smalldiv{
+				/*border: 1px solid #000;*/
+				position: absolute;
+				left: 50px;
+				top: 50px;
+			}
+			.smalldiv,.smalldiv img{
+				width: 500px;
+				height: 300px;
+			}
+			.movediv{
+				width: 150px;
+				height: 90px;
+				position: absolute;
+				left: 0;
+				top: 0;
+				background: grey;
+				opacity: .3;
+				filter: alpha(opacity=30);
+				display: none;
+			}
+			.bigdiv{
+				width: 550px;
+				height: 330px;
+				position: absolute;
+				left: 600px;
+				top: 50px;
+				overflow: hidden;
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="smalldiv" id="smalldiv">
+			<img src="dnf.jpg"  />
+			<div class="movediv" id="movediv"></div>
+		</div>
+		<div class="bigdiv" id="bigdiv">
+			<img src="dnf.jpg" />
+		</div>
+	</body>
+</html>
+<script>
+	var small =document.getElementById("smalldiv");
+	var big = document.getElementById("bigdiv");
+	var move = document.getElementById("movediv");
+	var big_img =big.getElementsByTagName("img")[0];
+	//big_img.style.width=(small.offsetWidth/move.offsetWidth)*small.offsetWidth+"px";
+	//alert(small.offsetWidth/move.offsetWidth);
+	
+	
+	//alert(big_img.style.width+"-"+big_img.style.height);
+	small.onmouseover=function(){
+		move.style.display="block";
+		big.style.display="block";
+		//大图片的放大倍数为 小div与移动div的比例  移动div越小倍数越大
+		var scaleX = small.offsetWidth/move.offsetWidth;
+		var scaleY = small.offsetHeight/move.offsetHeight;
+		big_img.style.width = scaleX*small.offsetWidth+"px";
+		big_img.style.height= scaleY*small.offsetHeight+"px";
+		small.onmousemove=function(e){
+			var e = e||window.event;
+			var x = e.clientX-small.offsetLeft-move.offsetWidth/2;
+			var y =e.clientY-small.offsetTop-move.offsetHeight/2;
+			var maxX=small.offsetWidth-move.offsetWidth;
+			var maxY=small.offsetHeight-move.offsetHeight;
+			if(x<=0){
+				x=0;
+			}
+			if(x>=maxX){
+				x=maxX;
+			}
+			if(y<=0){
+				y=0;
+			}
+			if(y>=maxY){
+				y=maxY;
+			}
+			move.style.left=x+"px";
+			move.style.top=y+"px";
+			big.scrollLeft=x*scaleX;//大div滚动距离
+			big.scrollTop=y*scaleY;
+		}	
+	}
+	small.onmouseout=function(){
+		move.style.display="none";
+		big.style.display="none";
+	}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/jquery-1.11.3.min.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.box{
+				position: relative;
+			}
+			.box div{
+				width: 100px;
+				height: 100px;
+				position: absolute;
+			}
+			.box1{
+				background: red;
+				transform: rotateY(90deg);
+			}
+			.box2{
+				background: blue;
+			}
+			.box .box1_move{
+				animation: rotate1 .5s linear forwards;
+			}
+			.box .box2_move{
+				animation: rotate2 .5s linear forwards;
+			}
+			@keyframes rotate1{
+				0%{
+					transform: rotateY(90deg);
+				}
+				100%{
+					transform: rotateY(0deg);
+				}
+			}
+			@keyframes rotate2{
+				0%{
+					transform: rotateY(0deg);
+				}
+				100%{
+					transform: rotateY(90deg);
+				}
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<div class="box1">
+			
+			</div>
+			<div class="box2">
+				
+			</div>
+		</div>
+		
+	</body>
+</html>
+<script type="text/javascript">
+	$(".box2").mouseenter(function  () {
+		$(this).addClass("box2_move");
+		$('.box1').addClass("box1_move")
+	})
+
+	
+	
+	
+	
+	
+	
+	
+</script>

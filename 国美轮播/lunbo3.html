@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>轮播图</title>
+		<style type="text/css">
+			*{margin:0;padding:0;list-style:none;}
+			.wrap{width:100%;height:500px;border:1px solid #000;position:relative;}
+			.screen{width:100%;height:500px;position:relative;}
+			.screen>div{width:100%;height:500px;position:absolute;left:0;top:0;}
+			.screen .red{background: red;}
+			.list{position:absolute;bottom:0px;left:33%;width:500px;height:50px;z-index:100;}
+			.list li{float:left;width:100px;height:30px;margin:10px 33px;background:rgba(0,0,0,.2);}
+			.font{display:block;width:100px;height:30px;text-align:center;line-height:30px;color:#fff;} 
+			
+			.kuai{display:none;width:100px;height:30px;}
+			.kuai>span{float:left;width:40px;height:10px;margin:10px 5px;background:#000;}
+			.kuai>.color{background:peru;}
+			
+			.screen .hover{z-index:9}
+			.one{background:palegoldenrod}
+			.two{background:palegreen}
+			.three{background:paleturquoise}
+		</style>
+		<script src="jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="wrap">
+			<div class="screen">
+				<div  class="one hover">1</div>
+				<div class="two">2</div>
+				<div class="three">3</div>
+			</div>
+			<ul class="list">
+				<li>
+					<span class="font" style="display:none;">123</span>
+					<a href="#" class="kuai" style="display:block;">
+						<span class="color"></span>
+						<span></span>
+					</a>	
+				</li>
+				<li>
+					<span  class="font">123</span>
+					<a href="#" class="kuai">
+						<span class="color"></span>
+						<span></span>
+					</a>	
+				</li>
+				<li>
+					<span  class="font">123</span>
+					<a href="#" class="kuai">
+						<span class="color"></span>
+						<span></span>
+					</a>	
+				</li>
+			</ul>
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+	var timer;
+	function move() {
+		$(".screen .hover").css("z-index",0).removeClass("hover").next("div").css("z-index",9).addClass("hover");
+		if($(".hover").length==0){
+			$(".screen div:first").css("z-index",9).addClass("hover")
+		}
+		var index=$(".screen .hover").index();
+		$(".list li").eq(index).find(".font").css("display","none");
+		$(".list li").eq(index).siblings().find(".font").css("display","block");
+		$(".list li").eq(index).find(".kuai").css("display","block");
+		$(".list li").eq(index).siblings().find(".kuai").css("display","none");
+	}
+	timer=setInterval(function () {
+		move()
+	},1000)
+	$(".screen").mouseenter(function () {
+		clearInterval(timer)
+	})
+	$(".screen").mouseleave(function () {
+		timer=setInterval(function () {
+			move()
+		},1000)
+	})
+	$(".list li").mouseenter(function () {
+		var index=$(this).index()
+		clearInterval(timer);
+		$(this).find(".font").css("display","none");
+		$(this).siblings().find(".font").css("display","block");
+		$(this).find(".kuai").css("display","block");
+		$(this).siblings().find(".kuai").css("display","none");
+		$(".screen div").eq($(this).index()).css("z-index",9).addClass("hover").siblings().css("z-index",0).removeClass("hover")
+		$(this).find("a").find("span").mouseenter(function () {
+			$(this).addClass("color").siblings().removeClass("color")
+		})
+		var $span=$(this).find("a").find("span");
+		//alert($span.length)
+		$span.eq(1).mouseenter(function () {
+			$(".screen div").eq(index).addClass("red");
+		})
+		$span.eq(1).mouseleave(function () {
+			$(".screen div").eq(index).removeClass("red");
+			$(this).removeClass("color").siblings().addClass("color");
+		})
+	})
+	$(".list li").mouseleave(function () {
+		timer=setInterval(function () {
+			move();
+		},1000)
+	})
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</script>

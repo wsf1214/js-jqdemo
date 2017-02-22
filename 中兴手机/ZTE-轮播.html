@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>ZTE轮播</title>
+		<script src="jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			/*400*260*/
+			
+			* {
+				margin: 0;
+				padding: 0
+			}
+			
+			ul,
+			ol {
+				list-style: none;
+			}
+			
+			img {
+				display: block;
+				border: 0;
+			}
+			
+			html,
+			body {
+				width: 100%;
+				height: 100%;
+			}
+			
+			#banner {
+				width: 100%;
+				height: 488px;
+				position: relative;
+				overflow: hidden;
+				cursor: pointer;
+				margin-top: 200px;
+			}
+			
+			#list {
+				width: 100%;
+				position: relative;
+				height: 488px;
+			}
+			
+			#imgs {
+				width: 1900px;
+				position: relative;
+				height: 488px;
+				left: 50%;
+				margin-left: -950px;
+				overflow: hidden;
+			}
+			
+			#list li img {
+				position: absolute;
+				top: 0;
+				left: 740px;
+				display: none;
+			}
+			
+			#list .hover {
+				display: block;
+				left: 0;
+			}
+			
+			.movePrev,
+			.moveNext {
+				width: 30px;
+				height: 90px;
+				background: url(img/indexs.png) no-repeat 0 0;
+				position: absolute;
+				z-index: 2;
+			}
+			
+			.moveButton {
+				height: 90px;
+				width: 740px;
+				position: absolute;
+				overflow: hidden;
+				top: 157px;
+				left: 50%;
+				margin-left: -170px;
+			}
+			
+			.movePrev {
+				left: -30px;
+				top: 0px;
+				background-position: 0 -15px;
+			}
+			
+			.moveNext {
+				right: -30px;
+				top: 0px;
+				background-position: -31px -15px;
+			}
+			
+			.dian {
+				width: 180px;
+				height: 20px;
+				position: absolute;
+				right: 250px;
+				bottom: 35px;
+				z-index: 10;
+			}
+			
+			.dian li {
+				width: 13px;
+				height: 13px;
+				border: 1px solid #fff;
+				margin: 0 3px;
+				float: left;
+				border-radius: 50%;
+			}
+			
+			.dian .dian_active {
+				background: #fff;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="banner">
+			<ul id="list">
+				<li id="imgs">
+					<img class="hover" src="img/1.jpg" />
+					<img src="img/2.jpg" />
+					<img src="img/3.jpg" />
+					<img src="img/4.jpg" />
+
+					<div class="moveButton">
+						<p class="movePrev"></p>
+						<p class="moveNext"></p>
+					</div>
+					<ul class="dian">
+						<li class="dian_active"></li>
+						<li></li>
+						<li></li>
+						<li></li>
+
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</body>
+
+</html>
+<script type="text/javascript">
+	var timer;
+	var speed = 3000;
+
+	function next() {
+		var index = $(".hover").index() + 1;
+		if(index == 4) {
+			index = 0;
+		}
+		//console.log(index);
+		$(".dian li").eq(index).addClass("dian_active").siblings().removeClass();
+		$(".hover").animate({
+			"left": -1900
+		}, 500, function() {
+			$(this).css({
+				"left": 0,
+				"display": "none"
+			}).removeClass();
+		}).next("img").css({
+			"left": 1900,
+			"display": "block"
+		}).animate({
+			"left": 0
+		}, 500, function() {
+			$(this).addClass("hover");
+		})
+		if($(".hover").next("img").length == 0) {
+			//alert(1)
+			$("#imgs img:first").css({
+				"left": 1900,
+				"display": "block"
+			}).animate({
+				"left": 0
+			}).addClass("hover")
+		}
+
+	}
+
+	function prev() {
+		var index = $(".hover").index() - 1;
+		if(index == -1) {
+			index = 3
+		}
+		console.log(index);
+		$(".dian li").eq(index).addClass("dian_active").siblings().removeClass();
+		$(".hover").animate({
+			"left": 1900
+		}, 500, function() {
+			$(this).css({
+				"left": 0,
+				"display": "none"
+			}).removeClass();
+		}).prev("img").css({
+			"left": -1900,
+			"display": "block"
+		}).animate({
+			"left": 0
+		}, 500, function() {
+			$(this).addClass("hover")
+		})
+		if($(".hover").prev("img").length == 0) {
+			//alert(1)
+			$("#imgs img:last").css({
+				"left": -1900,
+				"display": "block"
+			}).animate({
+				"left": 0
+			}).addClass("hover")
+		}
+	}
+	timer = setInterval(function() {
+		next()
+	}, speed)
+	$("#imgs").mouseenter(function() {
+		clearInterval(timer);
+		$(".movePrev").animate({
+			"left": "0"
+		})
+		$(".moveNext").animate({
+			"right": 0
+		})
+	})
+	$("#imgs").mouseleave(function() {
+		timer = setInterval(function() {
+			next();
+		}, speed)
+		$(".movePrev").animate({
+			"left": "-30"
+		})
+		$(".moveNext").animate({
+			"right": -30
+		})
+	})
+	$("#imgs").find("p").each(function(index) {
+		var y = parseFloat($(this).css("background-position-y"));
+		var y1 = y - 91;
+		$(this).mouseenter(function() {
+			$(this).animate({
+				"background-position-y": y1
+			}, 200)
+		})
+		$(this).mouseleave(function() {
+			$(this).animate({
+				"background-position-y": y
+			}, 200)
+		})
+		$(".movePrev").click(function() {
+			if(!$("#imgs img").is(":animated")) {
+				prev()
+			}
+		})
+		$(".moveNext").click(function() {
+			if(!$("#imgs img").is(":animated")) {
+				next()
+			}
+		})
+	})
+	$(".dian li").each(function(index) {
+		$(this).click(function() {
+			if(!$("#imgs img").is(":animated")) {
+				$(".dian li").removeClass("dian_active");
+				$(this).addClass("dian_active");
+				$(".hover").animate({
+					"left": -1900
+				}, 500)
+				$("#imgs img").eq(index).css({
+					"display": "block",
+					"left": 1900
+				}).animate({
+					"left": 0
+				}, 500, function() {
+					$(this).addClass("hover").siblings("img").css("display", "none").removeClass("hover");
+				})
+			}
+		})
+	})
+</script>

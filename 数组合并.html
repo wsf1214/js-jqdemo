@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="formatting.css" />
+	</head>
+
+	<body>
+
+	</body>
+
+</html>
+<script type="text/javascript">
+	/*var a = [
+			{s:"M",n:2},
+			{s:"L",n:3},
+			{s:"XL",n:5}
+		];
+		var b=[
+			{s:"S",n:1},
+			{s:"M",n:10},
+			{s:"L",n:2},
+			{s:"XL",n:2},
+			{s:"XXL",n:1}
+		];
+		for(var i=0;i<a.length;i++){
+			var c=a[i];
+			for(var j=0;j<b.length;j++){
+				var d=b[j];
+				if(c.s==d.s){
+					b[j].n=parseFloat(a[i].n)+parseFloat(b[j].n)
+				}
+			}
+		};
+		console.log(b)*/
+	var a=[
+	{
+		"color": "粉红色",
+		"s_n": [{"s": "S","n": 2},{"s": "M","n": 0},{"s": "L","n": 0},{"s": "XL","n": 0}
+		]
+	}
+	];
+	var b=[
+	{"color": "粉红色",
+	 "s_n": [{"s": "S","n": 2},{"s": "M","n": 0},{"s": "L","n": 0},{"s": "XL","n": 0}, {"s": "XXL","n": 3}]
+	},{
+		"color": "黑色",
+		"s_n": [
+		{"s": "S","n": 2},{"s": "M","n": 0},{"s": "L","n": 0},{"s": "XL","n": 0},{"s": "XXL","n": 3}
+		]
+		}
+	];
+	for(var i=0;i<a.length;i++){
+		var acolor=a[i].color;
+		for(var j=0;j<b.length;j++){
+			var bcolor=b[j].color;
+			if(acolor==bcolor){
+				for(var x=0;x<a[i].s_n.length;x++){
+					var A=	a[i].s_n[x].s;
+					for(var y=0;y<b[j].s_n.length;y++){
+						var B=b[j].s_n[y].s;
+						if(A==B){
+							b[j].s_n[y].n=parseFloat(b[j].s_n[y].n)+parseFloat(a[i].s_n[x].n)
+						}
+					}
+					
+				}
+			}
+		}
+	}
+	//console.log(b)
+	
+	
+	
+	
+	
+	
+</script>

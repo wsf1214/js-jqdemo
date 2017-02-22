@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>日历</title>
+		<link rel="stylesheet" type="text/css" href="formatting.css"/>
+		<script src="nongli.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			.calendar{width:420px;height:470px;margin: 50px;padding:10px;}
+			.calHead{width:400px;height:30px;margin-bottom:10px;padding-left: 20px;position: relative;}
+			.selectYear,.selectMonth{border: 0;background:lightgrey;color: darkslategrey;width:60px;height: 30px;float: left;text-align: center;font-size: 17px;}
+			.years,.months{width:60px;height:200px;position: absolute;left:20px;top:30px;background: greenyellow;overflow-y: scroll;display: none;}
+			.months{left:80px;}
+			/*10个li*/
+			.years li,.months li{text-align: center;line-height:20px;font-size: 12px;}
+			.calMiddle{width:420px;height:30px;}
+			.calMiddle li{float: left;width:60px;font-size: 17px;line-height:30px;text-align:center;font-family: "微软雅黑";}
+			.calMain{height:400px;width:420px;float: left;}
+			.nowMonthDate{width:50px;height:30px;text-align: center;padding:5px;line-height:30px;font-size: 24px;color: #000;}
+			.ontherMonthDate{width:50px;height:30px;text-align: center;padding:5px;line-height:30px;font-size: 24px;color:darkgrey;}
+			.weekMonthDate{color: red;}
+			/*.nongli{}*/
+		</style>
+	</head>
+	<body>
+		<!--<div id="test">
+			123
+		</div>-->
+		<div class="calendar">
+			<div class="calHead" id="calHead">
+				<div class="selects">
+					<input type="button" class="selectYear" id="selectYear" value="2016年" />
+					<input type="button" class="selectMonth" id="selectMonth" value="10月" />
+				</div>
+				<ul class="years" id="years"></ul>
+				<ul class="months" id="months"></ul>
+			</div>
+			<ul class="calMiddle">				
+				<li>一</li>
+				<li>二</li>
+				<li>三</li>
+				<li>四</li>
+				<li>五</li>
+				<li style="color: red;">六</li>	
+				<li style="color: red;">日</li>
+			</ul>
+			<table class="calMain" id="calMain">
+			
+			</table>
+		</div>
+		
+	</body>
+</html>
+<script src="date.js" type="text/javascript" charset="utf-8"></script>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>天联轮播图右</title>
+		<script src="jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" href="formatting.css" />
+		<style type="text/css">
+			ul{
+				width: 230px;
+				height: 230px;
+				margin: 20px auto;
+				padding:  5px;
+				padding-top: 1px;
+				color: #fff;
+			}
+			ul li{
+				width: 230px;
+				height: auto;
+				margin: 5px 0;
+				background: lightgrey;
+			}
+			.top{
+				width: 230px;
+				height: 20px;
+				overflow: hidden;
+				background: #fff;
+				color: #000;
+			}
+			.bottom{
+				width: 230px;
+				height: 0;
+				overflow: hidden;
+				overflow: hidden
+			}
+		</style>
+	</head>
+	<body>
+		<ul>
+			<li>
+				<div class="top">
+				1
+				</div>
+				<div class="bottom">
+					2
+				</div>
+			</li>
+			<li>
+				<div class="top">
+				1
+				</div>
+				<div class="bottom">
+					2
+				</div>
+			</li>
+			<li>
+				<div class="top">
+				1
+				</div>
+				<div class="bottom">
+					2
+				</div>
+			</li>
+			<li>
+				<div class="top">
+				1
+				</div>
+				<div class="bottom">
+					2
+				</div>
+			</li>
+			<li>
+				<div class="top">
+				1
+				</div>
+				<div class="bottom">
+					2
+				</div>
+			</li>
+			<li>
+				<div class="top">
+				1
+				</div>
+				<div class="bottom">
+					2
+				</div>
+			</li>
+			
+			
+		</ul>
+		
+	</body>
+</html>
+<script type="text/javascript">
+	$("li").mouseenter(function () {
+		$(this).find(".top").stop().animate({"height":0}).parent().siblings().find(".top").stop().animate({"height":20});
+		$(this).find(".bottom").stop().animate({"height":100}).parent().siblings().find(".bottom").stop().animate({"height":0});
+	})
+</script>

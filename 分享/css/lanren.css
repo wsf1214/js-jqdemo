@@ -1,0 +1,105 @@
+body{overflow: hidden;}
+.trunk, .trunk div {
+    background:  #136086;
+    width: 150px;
+    height: 10px;
+    position:absolute;
+    left:20%;
+    top:70%;
+    margin-left: -10px;
+    -webkit-animation-name: rot;
+            animation-name: rot;
+    -webkit-animation-duration: 2s;
+            animation-duration: 2s;  /*表示动画持续的时间*/
+    -webkit-animation-iteration-count: infinite;
+            animation-iteration-count:infinite;   /*表示动画循环*/
+    -webkit-animation-direction: alternate;
+            animation-direction:alternate; /*表示动画的方向*/
+    -webkit-transform-origin: 5px 5px;
+            transform-origin:5px 5px;/*允许更改转换元素的位置。*/ 
+    -webkit-animation-timing-function: ease-in-out;
+            animation-timing-function:ease-in-out;  /*表示动画使用的时间曲线*/
+             }
+.trunk{
+  bottom: 0;
+  left: 50%;
+          animation-name: rot-root;
+          animation-duration: 2s;
+}
+.trunk div {
+	
+  top: 0;
+  left: 150px;
+  
+          animation-duration: 1.7s;/*时间相同动画效果*/
+          
+}
+.trunk :nth-child(1), /*选择器*/
+.trunk >div:nth-child(1) {
+	
+          animation-name: rot-inv;
+          animation-duration: 1.9s;
+}
+/*检索或设置对象所应用的动画名称，必须与规则@keyframes配合使用，因为动画名称由@keyframes定义
+如果提供多个属性值，以逗号进行分隔。*/
+/*transform的属性包括：rotate() scale() skew() translate()*/
+@-webkit-keyframes rot {
+  from {
+    -webkit-transform: rotateX(15deg) scale(0.66);
+            transform: rotateX(15deg) scale(0.66);
+  }
+  to {
+    -webkit-transform: rotate(55deg) scale(0.72);
+            transform: rotate(55deg) scale(0.72);
+  }
+}
+@keyframes rot {
+  from {
+    -webkit-transform: rotate(15deg) scale(0.66);
+            transform: rotate(15deg) scale(0.66);
+  }
+  to {
+    -webkit-transform: rotate(55deg) scale(0.72);
+            transform: rotate(55deg) scale(0.72);
+  }
+}
+@-webkit-keyframes rot-inv {
+  from {
+    -webkit-transform: rotate(-55deg) scale(0.66);
+            transform: rotate(-55deg) scale(0.66);
+  }
+  to {
+    -webkit-transform: rotate(-25deg) scale(0.72);
+            transform: rotate(-25deg) scale(0.72);
+  }
+}
+@keyframes rot-inv {
+  from {
+    -webkit-transform: rotate(-55deg) scale(0.66);
+            transform: rotate(-55deg) scale(0.66);
+  }
+  to {
+    -webkit-transform: rotate(-25deg) scale(0.72);
+            transform: rotate(-25deg) scale(0.72);
+  }
+}
+@-webkit-keyframes rot-root {
+  from {
+    -webkit-transform: rotate(-95deg) ;
+            transform: rotate(-95deg);
+  }
+  to {
+    -webkit-transform: rotate(-85deg);
+            transform: rotate(-85deg);
+  }
+}
+@keyframes rot-root {
+  from {
+    -webkit-transform: rotate(-95deg);
+            transform: rotate(-95deg);
+  }
+  to {
+    -webkit-transform: rotate(-85deg);
+            transform: rotate(-85deg);
+  }
+}

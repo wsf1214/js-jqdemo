@@ -1,0 +1,89 @@
+﻿<html>
+	<head>
+		<title>DOM</title>
+		<style>
+			#box{width:100px;height:100px;background:red;position:absolute;left:0px;top:200px;}
+		
+		</style>
+		<script>
+		window.onload=function(){
+			mBox=document.getElementById("box");
+		}
+		var timer=null;
+		function getStyle(obj,style){
+	
+			if(obj.currentStyle){
+				//是IE
+				return obj.currentStyle[style];
+			}else{
+				return getComputedStyle(obj)[style];
+			}
+			
+		}
+		function move(obj,styles,speed,iTager){
+			clearInterval(timer);
+			timer=setInterval(function(){
+				var old = parseInt(getStyle(obj,styles));
+				if(old!=iTager){
+					if(old<iTager){
+						
+						obj.style[styles]=old+speed+"px";
+					}
+					else{
+						
+						obj.style[styles]=old-speed+"px";
+					};
+				}
+				else{
+					
+					clearInterval(timer);
+				}
+			},30)
+		}
+		function right(){
+			
+			move(mBox,"left",5,300);
+		};
+		function left(){
+	
+			move(mBox,"left",5,0);
+		};
+		function up(){
+		
+			move(mBox,"top",5,100);
+		};
+		function down(){
+		
+			move(mBox,"top",5,300);
+		};
+		
+		
+		function stop(){
+			clearInterval(timer)
+		}
+		function middle(){
+			
+			clearInterval(timer);
+			mBox.style.top="200px";
+			mBox.style.left="150px";
+		}
+		
+		
+		</script>
+	
+	</head>
+<body>
+<input type="button" value="右" onclick="right()"/>
+<input type="button" value="左" onclick="left()"/>
+<input type="button" value="上" onclick="up()"/>
+<input type="button" value="下" onclick="down()"/>
+<input type="button" value="停止" onclick="stop()"/>
+<input type="button" value="中" onclick="middle()"/>
+
+<div id="box">
+
+</div>
+
+</body>
+	
+</html>

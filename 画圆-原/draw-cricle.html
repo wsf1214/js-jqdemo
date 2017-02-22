@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>画圆</title>
+		<style type="text/css">
+			*{margin: 0;padding: 0;}
+			html,body{width: 100%;height: 100%;}
+			/*#oCenter{
+				position: absolute;
+				left: 200px;
+				top: 200px;
+				height: 5px;
+				width: 5px;
+				background: black;
+				border-radius: 50%;
+			}*/
+			.radian{
+				position: absolute;
+				width: 20px;
+				height: 20px;
+				border-radius: 50%;
+			}
+		</style>
+		<script type="text/javascript" src="comm.js"></script>
+		<script type="text/javascript">
+			window.onload = function(){
+//				var oCenter = document.getElementById("oCenter");
+    			var a = 200, b = 200, r = 100, degree = 0,num = 0;
+		   		var timer = setInterval(function(){
+		        	degree += 6;  //度数变化
+		        	var radian = (2*Math.PI / 360)* degree; //得到弧度  弧度和角度的换算  1度 = 2π / 360弧度
+		        	var X = a + Math.sin(radian) * r;
+		        	var Y = b - Math.cos(radian) * r  ;
+				    var odiv = document.createElement("div");
+				    odiv.className = 'radian';
+				    odiv.style.left = X - 10 + "px";
+				    odiv.style.top = Y - 10 + "px";
+				    odiv.style.background = comm.getRandomColor();
+				    document.body.appendChild(odiv);
+				    
+				    //一个圆
+				    /*if(degree == 360){				    	
+				    	clearInterval(timer)
+				    }*/
+				   
+				    //五环
+				    /*if(degree == 360){
+				    	num ++;
+				    	a += 200;
+				    	b += 100;
+				    	degree = 0;
+				    	if(num == 5){
+				    		clearInterval(timer)
+				    	}				        
+			        }*/
+			       
+			       
+			       //改变圆心
+			       
+			       /*if(degree == 360){
+				    	num ++;
+				    	a += Math.sin((Math.PI / 3)*num) * r;
+				    	b -= Math.cos((Math.PI / 3)*num) * r;
+				    	degree = 0;
+				    	if(num == 6){
+				    		clearInterval(timer)
+				    	}				        
+			        }*/
+			       
+			       
+			       //奥运五环
+			       if(degree == 360){
+				    	num ++;
+				    	if(num < 3){
+				    		a += 220;
+				    		degree = 0;
+				    	}else if(num == 3){
+				    		a = 200;
+				    		b = 200;
+				    		a += Math.cos(Math.PI / 6) * r;
+				    		b += Math.sin(Math.PI / 6) * r;
+				    		degree = 0;
+				    		
+				    	}else if(num == 4){
+				    		a += Math.cos(Math.PI / 3) * r + 2*r;
+				    		degree = 0;
+				    	}
+				    	if(num == 5){
+				    		clearInterval(timer)
+				    	}				        
+			        }
+			       
+			    }, 1);			
+			}			
+		</script>
+		
+	</head>
+	<body>	
+		<!--<div id="oCenter"></div>-->
+	</body>
+</html>

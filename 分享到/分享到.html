@@ -1,0 +1,45 @@
+﻿<html>
+
+	<head>
+		<title>DOM</title>
+		<script src="jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+
+		<style>
+			#box1 {
+				width: 300px;
+				height: 300px;
+				background: red;
+				position: absolute;
+				left: -300px;
+				top: 100px;
+			}
+			#box2 {
+				position: absolute;
+				width: 20px;
+				height: 60x;
+				right: -20px;
+				top: 90px;
+				background: blue;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="box1">
+			<div id="box2">
+				分享到
+			</div>
+		</div>
+	</body>
+</html>
+
+<script type="text/javascript">
+	$("#box1").bind({
+		mouseenter:function () {
+			$(this).animate({"left":"+=300"})
+		},
+		mouseleave:function () {
+			$(this).animate({"left":"-=300"})
+		}
+	})
+</script>

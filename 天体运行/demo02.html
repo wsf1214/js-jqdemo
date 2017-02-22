@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="Keywords" content="关键词1,关键词2" />
+		<meta name="Description" content="描述"/>
+		<title></title>
+		<style>
+		.body{}
+		.box{padding: 0 250px;}	
+		#canvas{background:#000;}
+			
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<canvas id="canvas" width="900" height="900"></canvas>	
+		</div>
+		<script>
+			var can=document.getElementById("canvas");
+			var ctx=can.getContext("2d");
+			
+//			ctx.beginPath();
+//			ctx.arc(450,450,100,0,360,false);
+//			ctx.strokeStyle="#fff";
+//			ctx.stroke();
+			
+			for(var i=0;i<8;i++){
+				ctx.beginPath();
+				ctx.arc(450,450,(i+1)*50,0,2*Math.PI,false);
+				ctx.strokeStyle="#fff";
+				ctx.stroke();
+			}
+			ctx.save();
+			ctx.translate(450,450);
+			ctx.beginPath();
+			ctx.arc(0,0,20,0,2*Math.PI,false);
+			//设置径向颜色
+			var color=ctx.createRadialGradient(0,0,0,0,0,20);
+			color.addColorStop(0,"#f00");
+			color.addColorStop(1,"#00f");
+			ctx.fillStyle=color;
+			ctx.fill();
+			ctx.restore();
+			
+		</script>
+	</body>
+</html>

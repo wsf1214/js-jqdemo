@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			div {
+				width: 20px;
+				height: 20px;
+				position: absolute;
+				border: 1px solid #000;
+			}
+			
+			.active {
+				background: darkgreen;
+			}
+			
+			.new {
+				background: red;
+			}
+		</style>
+	</head>
+
+	<body>
+	</body>
+
+</html>
+<script type="text/javascript">
+	var body = document.getElementsByTagName("body")[0];
+	var l = 20,
+		h = 20;
+	var i, j;
+	var a = [];
+	for(i = 0; i < l; i++) {
+		a[i] = [];
+		for(j = 0; j < h; j++) {
+			a[i][j] = document.createElement("div");
+			a[i][j].style.left = i * 24 + "px";
+			a[i][j].style.top = j * 24 + "px";
+			body.appendChild(a[i][j]);
+		}
+	}
+	for(i = 0; i < l; i++) {
+		a[i][0].className = "active";
+		a[i][h - 1].className = 'active';
+	}
+	for(i = 0; i < h; i++) {
+		a[0][i].className = "active";
+		a[l - 1][i].className = 'active';
+	}
+
+	/*生成新的1个块*/
+	var n = [];
+
+	function createN() {
+		nl = Math.floor(Math.random() * l);
+		nh = Math.floor(Math.random() * h);
+		if(a[nl][nh].className == "active") {
+			//alert(1);
+			createN();
+		} else {
+			a[nl][nh].className = "new";
+		}
+
+	}
+
+	function rad(c, d) { //c-d的随机数
+		var e = d - c + 1;
+		return Math.floor(Math.random() * e + c);
+	}
+
+	/*生成初始的num个连着的块*/
+	var t = [];
+
+	function createT(num) {
+		var type = Math.ceil(Math.random() * 2);
+		switch(type) {
+			case 1:
+				createTH(num);
+				break;
+			case 2:
+				createTL(num);
+				break;
+			default:
+				break;
+		}
+	}
+	createT(5);
+	createN();
+	//createN();
+	/*生成随机的竖着的*/
+	function createTH(num) {
+		var tl = rad(1, l - 2),
+			th = rad(1, h - num - 1);
+		console.log("l" + "-" + tl + "-" + th)
+		for(i = 0; i < num; i++) {
+			//t.push(t0);
+			t.push({
+				l: tl,
+				h: th + i
+			});
+			a[t[i].l][t[i].h].className = "active";
+		}
+	}
+	/*生成随机的横着的*/
+	function createTL(num) {
+		var tl = rad(1, l - num - 1),
+			th = rad(1, h - 1);
+		for(i = 0; i < num; i++) {
+			//t.push(t0);
+			t.push({
+				l: tl + i,
+				h: th
+			});
+			a[t[i].l][t[i].h].className = "active";
+		}
+	}
+
+	//console.log(t[0].l +"列-l"+ "-" + t[0].h+"行-h")
+	//l是列数  h 是行数
+	//a[列][行]
+	/*往上走*/
+
+	var timer1, timer2, timer3, timer4;
+
+	function moveUp() {
+		moveU();
+		timer1 = setInterval(function() {
+			moveU();
+		}, 500)
+	}
+	//console.log("l"+"--"+t[0].l+"--"+"h"+"--"+t[0].h)
+	function moveU() {
+		if(a[t[0].l][t[0].h - 1].className == "new") {
+			//alert(1);
+			a[t[0].l][t[0].h - 1].className = "active";
+			t.unshift({
+				l: t[0].l,
+				h: t[0].h - 1
+			});
+			createN();
+		} else {
+			if(a[t[0].l][t[0].h - 1].className == "active") {
+				alert("GAMEOVER" + "   " + "  您的得分为 " + t.length + "分");
+				location.reload();
+			}
+			a[t[t.length - 1].l][t[t.length - 1].h].className = "";
+			t[t.length - 1].l = t[0].l;
+			t[t.length - 1].h = t[0].h - 1;
+			t.unshift(t[t.length - 1]);
+			t.pop();
+			a[t[0].l][t[0].h].className = "active";
+			over();
+		}
+
+	} //a[列][行]
+	/*往下走*/
+	function moveDown() {
+		moveD();
+		timer2 = setInterval(function() {
+			moveD();
+		}, 500)
+	}
+
+	function moveD() {
+		if(a[t[0].l][t[0].h + 1].className == "new") {
+			//alert(1);
+			a[t[0].l][t[0].h + 1].className = "active";
+			t.unshift({
+				l: t[0].l,
+				h: t[0].h + 1
+			});
+			//console.log(t.length);
+			//console.log(t[0].l+"-"+t[0].h)
+			createN();
+		}
+		else{
+			if(a[t[0].l][t[0].h + 1].className == "active") {
+				alert("GAMEOVER" + "   " + "  您的得分为 " + t.length + "分");
+				location.reload();
+			}
+			a[t[t.length - 1].l][t[t.length - 1].h].className = "";
+			t[t.length - 1].l = t[0].l;
+			t[t.length - 1].h = t[0].h + 1;
+			t.unshift(t[t.length - 1]);
+			t.pop();
+			a[t[0].l][t[0].h].className = "active";
+			over();
+		}
+		
+	}
+
+	/*往左走*/
+	function moveLeft() {
+		moveL();
+		timer3 = setInterval(function() {
+			moveL();
+		}, 500)
+
+	}
+
+	function moveL() {
+		if(a[t[0].l - 1][t[0].h].className == "new") {
+			//alert(1);
+			a[t[0].l - 1][t[0].h].className = "active";
+			t.unshift({
+				l: t[0].l - 1,
+				h: t[0].h
+			});
+			//console.log(t.length);
+			//console.log(t[0].l+"-"+t[0].h)
+			createN();
+			}
+			else {
+				if(a[t[0].l - 1][t[0].h].className == "active") {
+					alert("GAMEOVER" + "   " + "  您的得分为 " + t.length + "分");
+					location.reload();
+				}
+				a[t[t.length - 1].l][t[t.length - 1].h].className = "";
+				t[t.length - 1].l = t[0].l - 1;
+				t[t.length - 1].h = t[0].h;
+				t.unshift(t[t.length - 1]);
+				t.pop();
+				a[t[0].l][t[0].h].className = "active";
+				over();
+			}
+
+			}/*往右走*/
+	function moveRight() {
+		moveR();
+		timer4 = setInterval(function() {
+			moveR();
+		}, 500)
+	}
+
+	function moveR() {
+		if(a[t[0].l + 1][t[0].h].className == "new") {
+			//alert(1);
+			a[t[0].l + 1][t[0].h].className = "active";
+			t.unshift({
+				l: t[0].l + 1,
+				h: t[0].h
+			});
+			//console.log(t.length);
+			//console.log(t[0].l+"-"+t[0].h)
+			createN();
+		}
+		else{
+			if(a[t[0].l + 1][t[0].h].className == "active") {
+				alert("GAMEOVER" + "   " + "  您的得分为 " + t.length + "分");
+				location.reload();
+			}
+			a[t[t.length - 1].l][t[t.length - 1].h].className = "";
+			t[t.length - 1].l = t[0].l + 1;
+			t[t.length - 1].h = t[0].h;
+			t.unshift(t[t.length - 1]);
+			t.pop();
+			a[t[0].l][t[0].h].className = "active";
+			//console.log(t[0].l + "列-l" + "-" + t[0].h + "行-h")
+			over();
+		}
+		
+	}
+	/*判断头朝向 最小块为3*/
+	function to() {
+		if(t[0].l < t[1].l) {
+			return "left";
+		}
+		if(t[0].l > t[1].l) {
+			return "right";
+		}
+		if(t[0].h < t[1].h) {
+			return "up";
+		}
+		if(t[0].h > t[1].h) {
+			return "down";
+		} else {
+			return "true";
+		}
+	}
+
+	function ct() {
+		clearInterval(timer1);
+		clearInterval(timer2);
+		clearInterval(timer3);
+		clearInterval(timer4);
+	}
+	/*上下左右移动*/
+	document.onkeydown = function(ev) {
+			var e = ev || event;
+			//左 - 65
+			//右 - 68
+			//上 - 87
+			//下 - 83
+			switch(e.keyCode) {
+				case 87: //上
+					if(to() != "down") {
+						ct();
+						moveUp();
+					}
+
+					break;
+				case 83: //下
+					if(to() != "up") {
+						ct();
+						moveDown();
+					}
+
+					break;
+				case 65: //左
+					if(to() != "right") {
+						ct();
+						moveLeft();
+					}
+
+					break;
+				case 68: //右
+					if(to() != "left") {
+						ct();
+						moveRight();
+					}
+					break;
+			}
+		}
+		/*判断碰壁*/
+	function over() {
+		if(t[0].h == 0 || t[0].h + 1 == h || t[0].l == 0 || t[0].l + 1 == l) {
+			alert("GAMEOVER" + "   " + "  您的得分为 " + t.length + "分");
+			location.reload();
+		}
+	}
+	moveUp();
+</script>

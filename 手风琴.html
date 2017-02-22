@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>手风琴</title>
+		<script src="jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			*{margin:0;padding:0}
+			ul,ol{list-style: none;}
+			ul{height: 200px;width: 400px;}
+			ul li{width: 50px;height: 200px;float: left;text-align: center;background: url(1.jpg) no-repeat center;position: relative;}
+			ul li span{width: 100%;height: 100%;background: dimgrey;display: block;text-align: center;color: #fff;background: rgba(0,0,0,0.3);position: absolute;left: 0;top: 0;}
+		</style>
+	</head>
+	<body>
+		<div style="overflow: hidden;width: 350px;height: 200px;background: #000;">
+			<ul>
+				<li><span>1</span></li>
+				<li><span>2</span></li>
+				<li><span>3</span></li>
+				<li><span>4</span></li>
+				<li><span>5</span></li>
+				<li><span>6</span></li>
+				<li><span>7</span></li>
+			</ul>
+		</div>
+		
+	</body>
+</html>
+<script type="text/javascript">
+	
+	var speed=200;
+	$("ul li").mouseenter(function () {
+		$("ul li").stop();
+		$(this).siblings().animate({"width":"40px","padding":0},speed)
+		$(this).animate({"padding":"0 30px","width":"50px"},speed)
+		$(this).children("span").css('opacity',"0");
+		$(this).siblings().children("span").css('opacity',"0.3");
+	})
+	$("ul").mouseleave(function () {
+		$("ul li").animate({"width":"50px","padding":0},speed)
+		$("ul li").children("span").css('opacity',"0.3");
+	})
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</script>

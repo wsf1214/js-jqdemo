@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>计算器</title>
+		<script src="demo.js"></script>
+		<style>
+			*{margin: 0;padding: 0;}
+			body{background: #000;}
+			.pic1{
+				position: absolute;
+				right: 0;
+				top: 0;
+			}
+			#jsq{
+				width:540px;
+				margin:30px auto;
+				border-radius:5px;
+				/*background: #aaa;*/
+				border: 2px solid #fff;
+			}
+			#jsq h2{
+				color:#fff;
+				text-indent:30px;
+				font-size: 16px;
+				line-height: 55px;
+				font-family: "微软雅黑";
+			}
+			.num{
+				border: 1px solid yellow;
+				width:480px;
+				margin: 0 auto;
+				border-radius: 5px;
+				line-height: 50px;
+				font-size: 50px;
+				text-align: right;
+				background: #fff7b2;
+			}
+			#jsq .btn{
+				width:490px;
+				height:310px;
+				margin:35px auto 30px;
+			}
+			#jsq .btn ul li{
+				color:#fff;
+				list-style: none;
+				width: 80px;
+				height: 60px;
+				background: #212121;
+				float: left;
+				text-align: center;
+				line-height: 60px;
+				margin: 9px;
+				box-shadow: 0 0 5px #fff; /*css3属性 值1:水平位置的阴影 值2:垂直位置的阴影 值3:模糊的距离 值4:阴影的颜色*/
+				border-radius: 5px;
+				font-size:18px;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="pic1"><img src="111.png" title="logo" /></div>
+		<div id="jsq">
+			<h2>迪迪计算器</h2>
+			<div class="num" id="result">0</div>
+			<div class="btn">
+				<ul>
+					<li onclick="command(7)">7</li>
+					<li onclick="command(8)">8</li>
+					<li onclick="command(9)">9</li>
+					<li onclick="clearZero()" style="width: 178px;">C</li>
+					<li onclick="command(4)">4</li>
+					<li onclick="command(5)">5</li>
+					<li onclick="command(6)">6</li>
+					<li onclick="tool('*')">*</li>
+					<li onclick="tool('/')">/</li>
+					<li onclick="command(1)">1</li>
+					<li onclick="command(2)">2</li>
+					<li onclick="command(3)">3</li>
+					<li onclick="tool('+')">+</li>
+					<li onclick="tool('-')">-</li>
+					<li onclick="command(0)">0</li>
+					<li onclick="command('00')">00</li>
+					<li onclick="point()">.</li>
+					<li onclick="eq()" style="width: 178px;">=</li>
+				</ul>
+			</div>
+		</div>
+	</body>
+</html>

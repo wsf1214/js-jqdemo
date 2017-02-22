@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			div {
+				width: 20px;
+				height: 20px;
+				position: absolute;
+				border: 1px solid #000;
+			}
+			
+			.active {
+				background: darkgreen;
+			}
+			
+			.new {
+				background: red;
+			}
+			
+			.border {
+				background: grey;
+			}
+		</style>
+	</head>
+
+	<body>
+	</body>
+
+</html>
+<script type="text/javascript">
+	var body = document.getElementsByTagName("body")[0];
+	var l = 30, //列数
+		h = 20; //行数
+	var i, j;
+	var a = [];
+	for(i = 0; i < l; i++) {
+		a[i] = [];
+		for(j = 0; j < h; j++) {
+			a[i][j] = document.createElement("div");
+			a[i][j].style.left = i * 24 + "px";
+			a[i][j].style.top = j * 24 + "px";
+			body.appendChild(a[i][j]);
+		}
+	}
+	for(i = 0; i < l; i++) {
+		a[i][0].className = "active";
+		a[i][h - 1].className = 'active';
+	}
+	for(i = 0; i < h; i++) {
+		a[0][i].className = "active";
+		a[l - 1][i].className = 'active';
+	}
+
+	function rad(c, d) { //c-d的随机数
+		var e = d - c + 1;
+		return Math.floor(Math.random() * e + c);
+	}
+	/*生成新的1个块*/
+	function createN() {
+		nl = rad(1, l - 2);
+		nh = rad(1, h - 2);
+		a[nl][nh].className = "new";
+	}
+
+	/*生成初始的num个连着的块*/
+	var t = [];
+	/*生成随机的竖着的*/
+	function createS(num) {
+		var tl = rad(2, l - 3),
+			th = rad(2, h - num - 1);
+		for(i = 0; i < num; i++) {
+			t.push({
+				l: tl,
+				h: th + i
+			});
+			a[t[i].l][t[i].h].className = "active";
+		}
+	}
+	//l是列数  h 是行数
+	//a[列][行]
+	function move(x, y) {
+		if(a[t[0].l - x][t[0].h - y].className == "new") {
+			a[t[0].l - x][t[0].h - y].className = "active";
+			t.unshift({
+				l: t[0].l - x,
+				h: t[0].h - y
+			});
+			createN();
+		} else {
+			if(a[t[0].l - x][t[0].h - y].className == "active") {
+				alert("GAMEOVER" + "   " + "  您的得分为 " + t.length + "分");
+				location.reload();
+			}
+			a[t[t.length - 1].l][t[t.length - 1].h].className = "";
+			t[t.length - 1].l = t[0].l - x;
+			t[t.length - 1].h = t[0].h - y;
+			t.unshift(t[t.length - 1]);
+			t.pop();
+			a[t[0].l][t[0].h].className = "active";
+			// over();
+		}
+
+	}
+	var timer; /*往上走*/
+	function moveXY(x, y) {
+		clearInterval(timer)
+		move(x, y);
+		timer = setInterval(function() {
+			move(x, y);
+		}, 500)
+	}
+
+	/*判断头朝向 最小块为3*/
+	function to() {
+		if(t[0].l < t[1].l) {
+			return "left";
+		}
+		if(t[0].l > t[1].l) {
+			return "right";
+		}
+		if(t[0].h < t[1].h) {
+			return "up";
+		}
+		if(t[0].h > t[1].h) {
+			return "down";
+		} else {
+			return "true";
+		}
+	}
+	/*上下左右移动*/
+	document.onkeydown = function(ev) {
+			var e = ev || event;
+			//左 - 65
+			//右 - 68
+			//上 - 87
+			//下 - 83
+			switch(e.keyCode) {
+				case 87: //上
+					if(to() != "down") {
+						moveXY(0, 1);
+					}
+					break;
+				case 83: //下
+					if(to() != "up") {
+						moveXY(0, -1);
+					}
+					break;
+				case 65: //左
+					if(to() != "right") {
+						moveXY(1, 0);
+					}
+					break;
+				case 68: //右
+					if(to() != "left") {
+						moveXY(-1, 0);
+					}
+					break;
+			}
+		}
+		/*判断碰壁*/
+	function over() {
+		if(t[0].h == 0 || t[0].h + 1 == h || t[0].l == 0 || t[0].l + 1 == l) {
+			alert("GAMEOVER" + "   " + "  您的得分为 " + t.length + "分");
+			location.reload();
+		}
+	}
+	createS(2); //生成初始块
+	createN(); //生成新的一个块
+	setTimeout(function() {
+		moveXY(0, 1); //生成的初始块动起来
+	}, 1000)
+</script>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body,h3,p,button,li,img ul{
+            margin:0;
+            padding: 0;
+        }
+        li{
+            list-style: none;
+        }
+        #cartlist{
+            width:1000px;
+            margin:100px auto;
+
+        }
+        .cartlist-item{
+            width:200px;
+            height:288px;
+            float:left;
+            border:1px solid #FFF;
+            margin-left:45px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .cartlist-item img{
+            float:left;
+            width:200px;
+        }
+        .cartlist-item p{
+            float:left;
+            width:100%;
+            height:25px;
+            text-align: center;
+            font-size: 20px;
+            color: #FE0000;
+        }
+        .cartlist-item h3{
+            float:left;
+            width:100%;
+            height:25px;
+            text-align: center;
+
+        }
+        .cartlist-item button{
+            width:100%;
+            background: #F00;
+            float:left;
+            text-align: center;
+            color:#000;
+            border:1px solid green;
+            height:40px;
+            font-size: 22px;
+
+        }
+        .cartlist-item button:hover{
+            background: #8b0000;
+            color:#FFFFFF;
+            font-size:24px;
+            cursor: pointer;
+        }
+        .cartlist-item:hover{
+            border:1px solid #ccc;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<ul id="cartlist">
+    <!--<li class="cartlist-item">
+        <img src="images/0.jpg" alt="">
+        <p>1000</p>
+        <h3>iPhone</h3>
+        <button>加入购物车</button>
+    </li>                           -->
+</ul>
+    <script src="js/ajax.js"></script>
+    <script>
+        var cartlist=document.getElementById("cartlist");
+        //从服务器获取数据并展示
+        var listarray=null;
+        $.ajax("json/list.json",function(res){
+            listarray=res;
+            var htmlstr = "";
+            for(var i=0;i<res.length;i++){
+                var obj=res[i];
+                //console.log(obj);
+                htmlstr +='<li class="cartlist-item"  name="' + i + '">'
+                    + '<img src="' + obj.image + '" alt="">'
+                    + '<p>'+ obj.price+ '</p>'
+                    + '<h3>' + obj.name + '</h3>'
+                    + '<button>加入购物车</button>'
+                    + '</li>'
+            }
+            cartlist.innerHTML=htmlstr;
+        });
+        //利用事件委托把点击事件交给ul处理
+        cartlist.onclick=function(ev){
+            ev=ev||event;
+            var tar=ev.target;//获取目标对象
+            //console.dir(tar);
+            //利用tar.nodeName来判断button是否被点击
+            if (tar.nodeName.toLowerCase()=="button"){
+                //console.dir(tar.offsetParent);//获取button 的li
+                //index获取下标
+                var index=parseInt(tar.offsetParent.getAttribute("name"));
+                //alert("你点击的是"+index);
+                //console.log(listarray[index]);
+                addToCookie(listarray[index]);//当点击button的时候，把这条商品信息加入到cookie
+            }
+        };
+        //声明一个数组，数组里的内容和cookie保持一致
+        //当用户添加购物车时，先操作这个数组，然后把这个数组转化成字符串存入cookie
+        var cookieArray=getCookieArray();
+
+        //把cookie中所有的商品信息拿出来放到数组中
+        //list=[{},{},{}]; username=zhou; userid=123455;
+        //让cookie中的购物车数据和数组关联起来
+        function getCookieArray(){
+            //进行分割，拿到一条一条的cookie数组
+            var arr=document.cookie.split("; ");
+            for (var i=0;i<arr.length;i++){
+                 var key=arr[i].split("=")[0];
+                 var value=arr[i].split("=")[1];
+                if (key=="list"){
+                    return JSON.parse(value);//返回数组
+                }
+            }
+            return [];//之前没有加入到购物车的直接返回空数组
+        }
+
+        //查询当前要加入购物车的商品之前是否添加过
+        //当前添加的是第几个
+        //获取当前要添加的商品在数组中是第几个
+        //如果该商品在数组中不存在则返回-1；
+        //obj={name,price}
+        //cookieArray=[{name},{name},{name}]
+        function getIndexOf(obj){
+            for (var i=0;i<cookieArray.length;i++){
+
+                if (cookieArray[i].name==obj.name){
+                    return i;
+                }
+            }
+                    return -1;//该商品从未被添加过
+        }
+
+        //将数组写入cookie
+        //cookie格式
+        //list=[{},{},{}]
+        //{name:xx,price,image:xx,id,count:2}
+        function addToCookie(obj){
+            /*var arr=[];
+            obj.count=1;//给商品添加数量信息
+            arr.push(obj);
+            //将商品写入到cookie;
+            var date=new Date();
+            date.setDate(date.getDate()+3);//设置时间
+            document.cookie="list="+JSON.stringify(arr)+";expires="+date.toString();*/
+            var index=getIndexOf(obj);
+            if (index!=-1){
+                cookieArray[index].count++;//加入数组中存在该商品，则数量加一
+            }else{//把obj对应的商品添加到数组中
+                obj.count=1;//给商品对象新增一个属性count
+                cookieArray.push(obj);
+            }
+            //把最新的数组写到cookie中
+            var date=new Date();
+            date.setDate(date.getDate()+3);//设置时间
+            document.cookie="list="+JSON.stringify(cookieArray)+";expires="+date.toString();
+
+
+
+
+
+
+
+        }
+    </script>
+</body>
+</html>

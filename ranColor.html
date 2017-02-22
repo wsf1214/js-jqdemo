@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>随机颜色</title>
+		<style>
+			*{margin: 0;
+			padding:0;}
+			html,body{width: 100%;
+			height: 100%;}
+			.ball{width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			position: absolute;
+			left: 0;
+			top:50px;
+			background: red;
+			border: 10px double ;}
+		</style>
+	</head>
+	<body>
+		<div class="ball" id="ball"></div>
+	</body>
+</html>
+<script>
+	var ball=document.getElementById("ball");
+	setInterval(function(){
+		ball.style.backgroundColor=randomColor();
+		ball.style.borderColor=randomColor();
+	},100)
+	setInterval(function(){
+		ball.style.backgroundColor=randomColor();
+		ball.style.borderColor=randomColor();
+	},100)
+	function randomColor(){
+		var colors="";
+		var arr = [0,1,2,3,4,5,6,7,8,9,"a","b","c","d","e","f"];
+		for(var i = 0;i<6;i++){
+			colors+=arr[radNum()];
+		}
+		return "#"+colors;
+		function radNum(){
+			return Math.floor(Math.random()*16);
+		}
+	}
+	//alert(randomColor())
+	
+</script>

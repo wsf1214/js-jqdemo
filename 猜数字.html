@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script>  
+		onload = function(){
+			   
+    //定义累加变量，用于统计第几次输入  
+      
+     var count=1;   
+    //定义一个标志位  
+     var flag=true;  
+     var str;//存储每次输入的结果  
+    //产生一个随机数  
+     var sjNum = Math.round(Math.random()*1000);  
+      
+    //while循环  
+      while(flag){  
+          str="";  
+        //判断是否超过10次  
+           if(count<=10){  
+        //获取用户的输入内容  
+           var inputNum=prompt("请输入您要猜的数字","1");  
+              if(inputNum<sjNum){  
+                str+="您本次是第"+count+"次竞猜，还有"+(10-count)+"次机会，本次猜的数字是"+inputNum+"您输入的小了<br>";  
+        count++;  
+         }else if(inputNum>sjNum){  
+          str+="您本次是第"+count+"次竞猜，还有"+(10-count)+"次机会，本次猜的数字是"+inputNum+"您输入的大了<br>";  
+              count++;  
+         }else if(inputNum==sjNum){  
+           str+="您本次是第"+count+"次竞猜，恭喜您猜对了";  
+        //设置标志位  
+        flag=false;  
+              }  
+         document.write(str);  
+    }  
+    else{  
+       alert("您已经没有机会了！");  
+       alert("正确答案是:"+sjNum);  
+       flag=false;  
+     }  
+     }  
+
+			
+	}	
+</script> 
+<style>
+	
+</style>
+	</head>
+	<body >
+		
+	
+	</body>
+</html>

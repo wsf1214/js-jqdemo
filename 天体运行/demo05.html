@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="Keywords" content="关键词1,关键词2" />
+		<meta name="Description" content="描述"/>
+		<title></title>
+		<style>
+		.body{}
+		.box{padding: 0 250px;}	
+		#canvas{background:#000;}
+			
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<canvas id="canvas" width="900" height="900"></canvas>	
+		</div>
+		<script>
+			var can=document.getElementById("canvas");
+			var ctx=can.getContext("2d");
+			
+//			ctx.beginPath();
+//			ctx.arc(450,450,100,0,360,false);
+//			ctx.strokeStyle="#fff";
+//			ctx.stroke();
+			
+			for(var i=0;i<8;i++){
+				ctx.beginPath();
+				ctx.arc(450,450,(i+1)*50,0,2*Math.PI,false);
+				ctx.strokeStyle="#fff";
+				ctx.stroke();
+			}
+			time=0;
+			function drawStar(x,y,r,cycle,sColor,eColor){
+				ctx.save();
+				ctx.translate(450,450);
+				ctx.rotate(time*(360/cycle)*Math.PI/180);//旋转
+				ctx.beginPath();
+				ctx.arc(x,y,r,0,2*Math.PI,false);
+				
+				
+				
+				//设置径向颜色
+				var color=ctx.createRadialGradient(x,y,0,x,y,r);
+				color.addColorStop(0,sColor);
+				color.addColorStop(1,eColor);
+				ctx.fillStyle=color;
+				ctx.fill();
+				ctx.restore();
+				time++;
+			}
+			setInterval(function(){
+				
+				drawStar(0,0,20,0,"#ffff00","#ff9900");
+				drawStar(50,0,20,87,"#ffff00","#ff9900");
+				drawStar(100,0,20,224,"#ffff00","#ff9900");
+				drawStar(150,0,20,365,"#ffff00","#ff9900");
+				drawStar(200,0,20,686,"#ffff00","#ff9900");
+				drawStar(250,0,20,4332,"#ffff00","#ff9900");
+				drawStar(300,0,20,10759,"#ffff00","#ff9900");
+				drawStar(350,0,20,30799,"#ffff00","#ff9900");
+				drawStar(400,0,20,59860,"#ffff00","#ff9900");
+			},50);
+			
+		</script>
+	</body>
+</html>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>jQuery模仿百度关键词下拉匹配效果</title>
+<style>
+*{margin:0;padding:0;list-style-type:none;}
+a,img{border:0;}
+.demo{width:720px;margin:30px auto;}
+.demo h2{font-size:16px;color:#3366cc;height:30px;}
+.demo li{float:left;}
+.text{width:529px;height:22px;padding:4px 7px;padding:6px 7px 2px;border:1px solid #cdcdcd;border-color:#9a9a9a #cdcdcd #cdcdcd #9a9a9a;vertical-align:top;outline:none;margin:0 5px 0 0;font-size:16px;}
+.button{width:95px;height:32px;padding:0;padding-top:2px;border:0;background-position:0 -35px;background-color:#ddd;cursor:pointer;outline:none;}
+/**/
+.bigautocomplete-layout{display:none;background-color:#FFFFFF;border:1px solid #BCBCBC;position:absolute;z-index:100;max-height:220px;overflow-x:hidden;overflow-y:auto; }
+.bigautocomplete-layout table{border-collapse:collapse;border-spacing:0;background:none repeat scroll 0 0 #FFFFFF;width:100%;cursor:default;}
+.bigautocomplete-layout table tr{background:none repeat scroll 0 0 #FFFFFF;}
+.bigautocomplete-layout .ct{background:none repeat scroll 0 0 #D2DEE8 !important;}
+.bigautocomplete-layout div{word-wrap:break-word;word-break:break-all;padding:1px 5px;}
+</style>
+</head>
+<body>
+
+<!-- 代码部分begin -->
+<div class="demo">
+	<h2>仿百度首页搜索提示框效果</h2>
+	<form action="http://www.lanrenzhijia.com" method="post" name="searchform" id="searchform" class="searchinfo">
+		<ul>
+			<li><input type="text" id="lanren" value="" class="text" /></li>
+			<li><input type="submit" value="搜索" class="button" /></li>
+		</ul>
+	</form>
+</div>
+<script src="../jquery-1.11.3.js"></script>
+<script src="js/jquery.bigautocomplete.js"></script>
+<script>
+$(function(){
+	$("#lanren").bigAutocomplete({
+		width:543,
+		data:[
+			{title:"千锋王娇娇"},
+			{title:"千锋鲍佳佳"},
+			{title:"千锋“污云”"},
+			{title:"千锋翔哥"},
+			{title:"千锋地址"},
+			{title:"千锋大导演"},
+			{title:"千锋范冰冰"},
+			{title:"张绍辉帅哥"},
+			{title:"张绍辉男神"},
+			{title:"张绍辉好帅啊"},
+			{title:"张绍辉厉害"},
+			{title:"张绍辉帅"},
+			{title:"导演厉害"},
+			{title:"导演shui了女明星"},
+			{title:"导演和范冰冰去了某个地方"},
+			{title:"导演遭到李晨的暴打"},
+			{title:"导演卷土重来"}
+		],
+		callback:function(data){
+			alert(data.title);	
+			//data.title[0]
+		}
+	});
+})
+</script>
+<!-- 代码部分end -->
+
+</body>
+</html>

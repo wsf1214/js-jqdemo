@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>吸顶</title>
+		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/zepto_1.1.3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/iscroll-probe.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="css/reset.css" />
+		<style type="text/css">
+			html,
+			body {
+				width: 100%;
+				height: 100%;
+			}
+			
+			#warp {
+				width: 100%;
+				height: 100%;
+				overflow: scroll;
+				position: relative;
+			}
+			.big{
+				width: 100%;
+				position: absolute;
+				/*overflow-y: scroll;*/				
+			}
+			.big ul .top {
+				width: 100%;
+				height: 1rem;
+				background: red;
+				margin: 10px 0;
+			}
+			
+			.big ul .bottom {
+				width: 100%;
+				height: 3rem;
+				background: yellow;
+			}
+			
+			
+			#pullDown,
+			#pullUp {
+				position: absolute;
+				height: 1rem;
+				text-align: center;
+				line-height: 1rem;
+				font-size: 0.24rem;
+				width: 100%;
+				background: green;
+			}
+			
+			#pullDown {
+				top: -1rem;
+				
+			}
+			
+			#pullUp {
+				bottom: -1rem;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="warp">
+			<div class="big">
+				<div id="pullDown">
+					下拉
+				</div>
+				<ul>
+					<li>
+						<div class="top"></div>
+						<div class="bottom"></div>
+					</li>
+					<li>
+						<div class="top"></div>
+						<div class="bottom"></div>
+					</li>
+					<li>
+						<div class="top"></div>
+						<div class="bottom"></div>
+					</li>
+					<li>
+						<div class="top"></div>
+						<div class="bottom"></div>
+					</li>
+					<li>
+						<div class="top"></div>
+						<div class="bottom"></div>
+					</li>
+					<li>
+						<div class="top"></div>
+						<div class="bottom"></div>
+					</li>
+					<li>
+						<div class="top"></div>
+						<div class="bottom"></div>
+					</li>
+					<li>
+						<div class="top"></div>
+						<div class="bottom"></div>
+					</li>
+					<li>
+						<div class="top"></div>
+						<div class="bottom"></div>
+					</li>
+					<li>
+						<div class="top"></div>
+						<div class="bottom"></div>
+					</li>
+				</ul>
+				<div id="pullUp">
+					下拉
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>
+<script type="text/javascript">
+	/*
+	刷新之后需要调整屏幕大小才生效
+
+	 */
+	var myScroll = new IScroll("#warp", {
+		/*需要使用iscroll-probe.js才能生效probeType：1  滚动不繁忙的时候触发
+		probeType：2  滚动时每隔一定时间触发
+		probeType：3  每滚动一像素触发一次*/
+		probeType: 3,
+		momentum: false, //关闭惯性滑动
+		mouseWheel: true, //鼠标滑轮开启
+		//scrollbars: true, //滚动条可见
+		//fadeScrollbars: true, //滚动条渐隐
+		//interactiveScrollbars: true, //滚动条可拖动
+		shrinkScrollbars: 'scale', // 当滚动边界之外的滚动条是由少量的收缩
+		useTransform: true, //CSS转化
+		useTransition: true, //CSS过渡
+		bounce: true, //反弹
+		freeScroll: false, //只能在一个方向上滑动
+		startX: 0,
+		startY: 0,
+	});
+	myScroll.on("scroll", positionJudge);
+	myScroll.on("scrollEnd", action);
+	var pullDownFlag;
+	var pullUpFlag;
+
+	function positionJudge() {
+		if(myScroll.y > 40) {
+			pullDownFlag = 1;
+			$("#pullDown").html("松开即可刷新");
+		} else if(myScroll.y < (myScroll.maxScrollY - 45)) {
+			pullUpFlag = 1;
+			$("#pullUp").html("松开即可加载");
+		}
+	}
+
+	function action() {
+		//			console.log("over")
+
+		if(pullDownFlag == 1) {
+			console.log("刷新");
+			$("#pullDown").html("下拉刷新");
+
+			pullDownFlag = 0;
+		} else if(pullUpFlag == 1) {
+			console.log("加载");
+			$("#pullUp").html("上啦加载");
+			pullUpFlag = 0;
+		}
+	}
+</script>

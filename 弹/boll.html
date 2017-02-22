@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <title>碰撞小球</title>
+ <style>
+ #box{
+ display:block;
+  width: 500px;
+  height: 400px;
+  position: relative;
+  border:1px solid red;
+  margin:50px auto 0;
+ }
+ .box1{
+  width: 20px;
+  height: 20px;
+ border-radius: 10px;
+  border:1px solid green;
+  position: absolute;
+  top: 66px;
+  left: 88px;
+ }
+ </style>
+</head>
+<body>
+ <a id="box">
+  <div name="boll" class="box1">1</div>
+  <!--<div name="boll" class="box1">2</div>
+  <div name="boll" class="box1">3</div>
+  <div name="boll" class="box1">4</div>
+  <div name="boll" class="box1">5</div>-->
+ </a>
+ <script>
+var box=document.getElementById('box');
+var boll=document.getElementsByTagName('div')[0];
+var movex=1;
+var movey=1;
+var x=0,y=0;
+//alert(box.clientWidth+"-"+boll.clientWidth);
+	function show(){
+	//alert(typeof veCode(1));
+		if (movex) {//判断方向
+			x++;
+			if (x>=box.clientWidth-boll.clientWidth) {
+				movex=0;
+			}
+			boll.style.left=x+'px';
+		}
+		else{
+		x--;
+			if (x<=0) {
+				movex=1;
+			}
+			boll.style.left=x+'px';
+		}
+		if (movey) {
+			y++;
+			if (y>=box.clientHeight-boll.clientHeight) {
+				movey=0;
+			}
+			boll.style.top=y+'px';
+		}
+		else{
+			y--;
+			if (y<=0) {
+				movey=1;
+			}
+			boll.style.top=y+'px';
+		}
+		
+	}
+
+	setInterval(show,1)
+	
+	
+	
+	function veCode(n){
+	var veCode = [];
+	var rad = [];
+	function add(a,b){	
+		for(var i=a;i<=b;i++){
+			rad.push(i);
+		}
+	};
+	add(1,5);
+
+	function num(c,d){
+		var e = d+1-c;
+		return Math.floor(Math.random()*e+c);
+	};//c-d之间的随机数
+
+	for(var k =1;k<=n;k++){
+		veCode.push(rad[num(0,rad.length-1)]);
+	}
+	return veCode.join("");
+	}
+ </script>
+</body>
+</html>

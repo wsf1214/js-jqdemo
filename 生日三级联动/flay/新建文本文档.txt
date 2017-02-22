@@ -1,0 +1,36 @@
+一：animation 属性是一个简写属性，用于设置六个动画属性：
+
+    animation-name:动画名字，规定需要绑定到选择器的 keyframe 名称
+    animation-duration：动画一次完成所需时间
+    animation-timing-function：规定动画的速度曲线
+    animation-delay:动画延迟执行时间
+    animation-iteration-count：动画执行次数
+    animation-direction：规定是否应该轮流反向播放动画（默认是normal即不反向播放)，alternate方向播放
+二：animation 默认值是none 0 ease 0 1 normal
+三：animation中animation-timing-function规定的是动画的过度方式
+    有两种方式（1）：速度的方式就是匀速 减速  先快后慢 先慢后快等
+		   ease;ease-in;ease-in-out;linear;cubic-
+	      (2):steps过渡方式,即只需要关键帧之间的跳跃
+    默认是以ease方式过度的
+
+
+
+
+
+
+
+
+
+
+
+
+transetion与animation的区别：
+Transition作用是指定了某一个属性（如width、left、transform等）在两个值之间如何过渡，
+他包括transition-property、transition-duration、transition-timing-function、transition-delay等。
+如果某一个元素指定了Transiton，那么当其某个属性改变的时候就会按照Transition指定的方式进行过渡，动画就这么产生了。
+Animation也是通过指定某一个属性（如width、left、transform等）在两个值之间如何过渡来实现动画的，与Transition不同的是，
+Animation可以通过keyframe显式控制当前帧的属性值，而Transition只能隐式来进行（不能指定每帧的属性值），
+所以相对而言Animation的功能更加灵活。另外一个区别是Animation通过模拟属性值改变来实现动画，动画结束之后元素的属性没有变化；
+而Transition确实改变了元素的属性值，动画结束之后元素的属性发生了变化；这一点，这在实际应用中会产生很大的区别，也决定了二者各有春秋。
+Animation模块包括了animation-name、animation-duration、animation-timing-function、animation-delay、animation-iteration-count、animation-play-state等属性。
+其实说这么多，一句话就是：Transform和width、left一样，定义了元素很多静态样式，只不过通过Transition和Animation指定如何改变不同的属性值，才实现了动画。

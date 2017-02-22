@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.box{width: 500px;height: 500px;position: absolute;left: 100px;top: 100px;background: red;border-radius: 50%;background: url(img/bg.jpg) no-repeat center;}
+		</style>
+	</head>
+	<body>
+		<div class="box" id="box" style="transform: rotate(100deg);">
+			
+			
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+	var box =document.getElementById("box");
+	box.onmousedown=function(evt){
+		var event =evt||window.event;
+		box.onmousemove=function(evt){
+			var event =evt||window.event;
+			var start_x = 0,
+				start_y = 0,
+				end_x   = event.clientX-(box.offsetWidth/2+box.offsetLeft),
+				end_y   = -event.clientY+(box.offsetHeight/2+box.offsetTop);
+				b_deg   = angle({x:0,y:0},{x:end_x,y:end_y});
+				box.style.transform="rotate("+b_deg+"deg)";
+		}
+	}
+	//alert(box.style.transform);//rotat(100deg);
+
+	
+	box.onmouseup=function(){
+		box.onmousemove="";
+	}
+	function angle(start,end){
+		var diff_x = end.x-start.x,
+			diff_y = end.y-start.y;
+			var deg=360*Math.atan(diff_y/diff_x)/(2*Math.PI);
+			if(diff_x>=0){
+				deg=90-deg;
+			}
+			if(diff_x<=0){
+				deg=270-deg;
+			}
+			else{
+				deg=deg;
+			}
+			return deg;
+	}
+
+	
+</script>

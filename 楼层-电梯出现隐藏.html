@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>楼层</title>
+		<style type="text/css">
+			*{margin: 0;padding:0;}
+			ul,ol{list-style: none;}
+			div{height: 900px;font-size: 100px;width: 80%;margin: 0 auto;}
+			#nav{position: fixed;left: 10px;top: 220px;background: blue;width: 50px;height: 300px;display: none;}
+			#nav li{height: 50px;text-align: center;line-height: 50px;font-size: 10px;cursor: pointer;}
+			.active{background: pink;color:#fff;}
+			.active1{background: deeppink;color:#fff}
+		</style>
+	</head>
+	<script src="jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+	<body>
+		<p style="height: 200px;background: red;"></p>
+		<div style="background: greenyellow;">1</div>
+		<div style="background: darkgoldenrod;">2</div>
+		<div style="background: yellow;">3</div>
+		<div style="background: #FFC0CB;">4</div>
+		<div style="background: blue;">5</div>
+		<ul id="nav">
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+			<li>5</li>
+			<li>回到顶部</li>
+		</ul>
+	</body>
+</html>
+<script type="text/javascript">
+	function timerFunction() {
+		var a= $(document).scrollTop();
+		if(a>=200){
+			$("#nav").show(500);
+		}
+		else{
+			$("#nav").hide(500);
+		}
+		$("div").each(function (index) {		
+			if(a>$(this).offset().top-400){
+				$("#nav li").eq(index).addClass("active").siblings().removeClass();
+			}
+		})
+	}
+	$(window).scroll(function () {
+		setTimeout(function () {
+			timerFunction();
+		},500)	
+	})
+	$("#nav li").click(function () {
+		$("#nav li").removeClass();
+		$(this).addClass("active");
+		if($(this).index()==5){
+			$("html,body").animate({"scrollTop":"0px"},"slow")
+		}
+		else{
+			var a =$("div").eq($(this).index()).offset().top
+			$("html,body").animate({"scrollTop": a},"slow")
+		}
+	})
+	$("#nav li").mouseover(function () {
+		$("#nav li:not('.active')").removeClass();
+		if(!$(this).hasClass("active")){
+			$(this).addClass('active1');
+		}
+		
+	})
+
+
+</script>

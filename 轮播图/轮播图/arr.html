@@ -1,0 +1,32 @@
+﻿<html>
+	<head>
+		<title>DOM</title>
+		<script>
+		onload=function(){
+			var myDiv = document.getElementById("mydiv");
+			var myInput= document.getElementById("myinput");
+			
+			
+			myInput.onclick=function(){
+				var arr = myDiv.innerHTML.split(",");
+				
+				arr.push(arr[0]);
+				arr.shift();
+				myDiv.innerHTML=arr;
+			}
+			
+			
+		
+		}
+		</script>
+		
+
+	
+	</head>
+<body>
+<div id="mydiv">1,2,3,4</div>
+<input type="button" id="myinput" value="切换" />
+
+</body>
+	
+</html>

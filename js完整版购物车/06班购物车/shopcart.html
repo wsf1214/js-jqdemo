@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body,div,ul,li,p {
+            margin: 0;
+            padding: 0;
+        }
+        ul,li {
+            list-style-type: none;
+        }
+        #wrap {
+            width: 1002px;
+            margin: 50px auto;
+        }
+        #cartlist {
+            width: 1000px;
+            height: 500px;
+            margin: 100px auto;
+            margin-bottom: 0;
+            overflow: auto;
+            border: 1px solid #00F;
+        }
+        .cartlist-item {
+            width: 100%;
+            height: 110px;
+            overflow: hidden;
+            border-bottom: 1px solid #CCC;
+            position: relative;/*便于后代元素通过offsetParent访问*/
+        }
+        .cartlist-item img {
+            width: 100px;
+            height: 100px;
+            float: left;
+            margin-top: 5px;
+        }
+        .cartlist-item p {
+            float: left;
+            font-weight: 800;
+        }
+        .cartlist-item b {
+            float: left;
+            margin-top: 25px;
+            margin-left: -55px;
+            color: #F00;
+        }
+        .cartlist-item a {
+            float: left;
+            margin-top: 55px;
+            margin-left: -55px;
+            text-decoration: none;
+        }
+        .cartlist-item a:hover {
+            text-decoration: underline;
+        }
+        .cartlist-item .btnswrap {
+            float: left;
+            margin-top: 85px;
+            margin-left: -55px;
+            height: 20px;
+        }
+        .cartlist-item .btnswrap button {
+            float: left;
+        }
+        .cartlist-item .btnswrap input {
+            float: left;
+            width: 25px;
+            text-align: center;
+        }
+        #amout {
+            width: 1000px;
+            height: 40px;
+        }
+        #amout p {
+            font-size: 24px;
+            font-weight: 900;
+            float: left;
+            width: 400px;
+        }
+        #amout button {
+            float: right;
+            background-color: #8b0000;
+            color: #FFF;
+            width: 100px;
+            height: 40px;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <ul id="cartlist">
+            <!--<li class="cartlist-item">
+                <img src="images/1.jpg" alt="">
+                <p>iphone7</p>
+                <b>1000</b>
+                <a href="#" name="delete">删除</a>
+                <div class="btnswrap">
+                    <button name="btn1">+</button>
+                    <input type="text" value="99"/>
+                    <button name="btn2">-</button>
+                </div>
+            </li>-->
+        </ul>
+        <div id="amout">
+            <p>共计4件商品，$1000</p>
+            <button>立即结算</button>
+        </div>
+    </div>
+    <script>
+        //1.获取cookie中的数据并显示
+        var cookieArray=getCookieArray();
+        var cartlist=document.getElementById("cartlist");
+        var amout=document.getElementById("amout");
+        var htmlstr="";
+        for ( var i=0;i<cookieArray.length;i++){
+            var obj=cookieArray[i];
+            htmlstr+='<li class="cartlist-item">'
+                    +    '<img src="' + obj.image + '" alt="">'
+                    +    '<p>'+ obj.name + '</p>'
+                    +    '<b>'+ obj.price + '</b>'
+                    +    '<a href="#" name="delete">删除</a>'
+                    +    '<div class="btnswrap">'
+                    +    '<button name="btn1">+</button>'
+                    +    '<input type="text" value="' + obj.count + '"/>'
+                    +    '<button name="btn2">-</button>'
+                    +    '</div>'
+                    +    '</li>'
+        }
+        //显示购物车
+        cartlist.innerHTML=htmlstr;
+        //计算总价
+        reComputed();
+        // 删除操作      添加点击事件，利用事件委托
+        cartlist.onclick=function(ev){
+            ev=ev||event;
+            var tar=ev.target||ev.srcElement;
+            if (tar.getAttribute("name")=="delete"){//判断一下点击的是否是a元素
+                var li=tar.offsetParent;//获取父元素
+                console.dir(li);
+                var index=getIndexOfli(li);
+                //在数组中删除对应的对象
+                cookieArray.splice(index,1);
+                //与之对应的cookie中也要删除对应的对象  把最新的数组写入cookie
+                saveToCookie();
+                //从界面上移除该元素
+                cartlist.removeChild(li);
+                //重新计算价格和数量
+                reComputed();
+
+            }else if(tar.getAttribute("name")=="btn1"){
+                //让输入框+1
+                tar.nextElementSibling.value=parseInt(tar.nextElementSibling.value)+1;
+                var index=getIndexOfli(tar.offsetParent);//获取li的索引
+                cookieArray[index].count += 1;
+                //保存到cookie;
+                saveToCookie()
+                reComputed();
+
+            }else if (tar.getAttribute("name")=="btn2"){
+                //让输入框-1
+                tar.previousElementSibling.value=parseInt(tar.previousElementSibling.value)-1;
+                var index=getIndexOfli(tar.offsetParent);//获取li的索引
+                cookieArray[index].count -= 1;
+                //保存到cookie;
+                saveToCookie()
+                reComputed();
+            }
+
+        };
+        //更新数组到cookie
+        function saveToCookie(){
+            var date=new Date();
+            date.setDate(date.getDate()+3);
+            document.cookie="list="+JSON.stringify(cookieArray)+";expires="+date.toString();
+        }
+
+
+
+        //获取元素索引
+        function getIndexOfli(li){
+            var lis=cartlist.children;
+            for (var i= 0;i<lis.length;i++){
+                if (li==lis[i]){
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+
+        function getCookieArray(){
+            //进行分割，拿到一条一条的cookie数组
+            var arr=document.cookie.split("; ");
+            for (var i=0;i<arr.length;i++){
+                var key=arr[i].split("=")[0];
+                var value=arr[i].split("=")[1];
+                if (key=="list"){
+                    return JSON.parse(value);//返回数组
+                }
+            }
+            return [];//之前没有加入到购物车的直接返回空数组
+        }
+
+
+        function getIndexOf(obj){
+            for (var i=0;i<cookieArray.length;i++){
+                if (cookieArray[i].name==obj.name){
+                    return i;
+                }
+            }
+            return -1;//该商品从未被添加过
+        }
+        //计算购物车的数量和价格
+     //遍历数组，把数组中的count加起来
+
+        function reComputed(){
+            var count=0;
+            var sum=0;
+            for (var i=0;i<cookieArray.length;i++){
+                var obj=cookieArray[i];
+
+                count += obj.count;
+                sum +=obj.count*obj.price;
+            }
+        //更新到界面上
+        amout.children[0].innerHTML="共计"+count+"件商品,"+sum+"RMB";
+        }
+
+        //给每一个添加input事件
+        var inputs=document.getElementsByTagName("input");
+            for (var i=0;i<inputs.length;i++){
+                inputs[i].onblur=function(){
+                    //把cookieArray中的这条商品的信息，数量改为输入的值
+                    var index=getIndexOfli(this.offsetParent);
+                    cookieArray[index].count=parseInt(this.value);
+                    //保存
+                    saveToCookie();
+                    //更新到界面上
+                    reComputed();
+                }
+            }
+    </script>
+</body>
+
+</html>

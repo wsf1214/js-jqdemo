@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>圆形钟表</title>
+		<style type="text/css">
+			*{margin:0;padding:0;}
+			.clock{background: url(bg.jpg) no-repeat left top;width:580px;height:580px;position: absolute;left:50px;top:50px;}
+			.hou{background: url(hou.png) no-repeat left top;width:24px;height:231px;position: absolute;left:277px;top:174.5px;z-index: 8;}
+			.min{background: url(min.png) no-repeat left top;width:21px;height:323px;position: absolute;left:279px;top:128.5px;z-index: 9;}
+			.sec{background: url(sec.png) no-repeat left top;width:24px;height:372px;position: absolute;left:278px;top:104px;z-index: 10;}		
+		</style>
+	</head>
+	<body>
+		<div class="clock" id="clock">
+			<div class="hou" id="hou"></div>
+			<div class="min" id="min"></div>
+			<div class="sec" id="sec"></div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+	var clock=document.getElementById('clock');
+	//指针
+	
+	//alert(h);
+	setInterval(function(){
+		var hou =document.getElementById("hou");
+		var min =document.getElementById("min");
+		var sec =document.getElementById("sec");
+		var date =new Date();
+		var h =date.getHours();
+		var m =date.getMinutes();
+		var s =date.getSeconds();
+		var ms = date.getMilliseconds();
+		
+		var sdeg = (s+ms/1000)*6;
+		sec.style.transform="rotate("+sdeg+"deg)";
+		//console.log(s+"-"+ms);
+
+		var mdeg = (m+s/60+ms/60000)*6;
+		min.style.transform="rotate("+mdeg+"deg)";
+		//console.log(mdeg)
+		
+		h=h>=12?h-12:h;
+		var hdeg = (h+m/60+s/3600+ms/3600000)*30;
+		hou.style.transform="rotate("+hdeg+"deg)";
+		//console.log(hdeg);	
+	},1)
+</script>

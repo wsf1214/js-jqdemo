@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>DIV阴影</title>
+		<script src="jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<style type="text/css">
+			*{margin: 0;padding: 0;}
+			body{background: #E3E3E3;}
+			.box, .box1{width: 300px;height: 300px;position: absolute;left: 100px;top: 100px;background: #fff;}
+			.imgBox{width: 230px;height: 230px;position:absolute;left: 50%;margin-left:-115px;top: 50%;margin-top: -115px;}
+			.box1{left: 420px;}
+			.active{ box-shadow: 5px 5px 5px #B3B3B3,-5px 0 5px #B3B3B3; }
+			.big{transform: scale(1.1); transition: all 1s ease 0s;}
+			.normal{transform: scale(1); transition: all 1s ease 0s;}
+		</style>
+	</head>
+	<body>
+		<div class="box" id="box">
+			<div class="imgBox">
+				<img src="img/1.jpg" />
+			</div>
+		</div>
+		<div class=" box box1">
+			<div class="imgBox">
+				<img src="img/1.jpg" />
+			</div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+	$("div[class*=box]").each(function (index) {
+		var y =parseFloat($(this).css("top")) ;
+		var y1=y-20;
+		$(this).mouseenter(function () {
+			//alert(1)
+			$(this).stop().animate({"top":y1}).addClass("active").find("img").removeClass().addClass("big");
+		});
+		$(this).mouseleave(function () {
+			$(this).stop().animate({"top":y}).removeClass("active").find("img").removeClass().addClass("normal")
+		})
+		
+	})
+	
+</script>

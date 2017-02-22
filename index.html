@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="jquery-1.11.3.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="formatting.css"/>
+		<style type="text/css">
+			.absolute{position: absolute;top: 900px;width: 100px;height: 100px;background: red;}
+			.fixed{position: fixed;top: 40px;width: 100px;height: 100px;background: red;}
+		</style>
+	</head>
+	<body>
+		<div class="absolute"></div>
+		<div style="height: 100px;"></div>
+	</body>
+</html>
+<script type="text/javascript">
+	function timerFunction() {
+		var a= $(document).scrollTop();
+		if(a>=900){
+			$("div").eq(0).removeClass().addClass("fixed");
+		}
+		else{
+			$("div").eq(0).removeClass().addClass("absolute");
+		}
+		console.log(a)
+	}
+	$(window).scroll(function () {
+		timerFunction();			
+	});
+	// function bar(){
+	// 	return foo;
+	// 	foo=10;
+	// 	function foo(){};
+	// 	var foo="1";
+	// }
+	// console.log(typeof bar());
+	// var x=3;
+	// var foo={
+	// 	x:2,
+	// 	baz:{
+	// 		x:1,
+	// 		bar:function(){
+	// 			return this.x;
+	// 		}
+	// 	}
+	// };
+	// var go=foo.baz.bar;
+	// console.log(go());
+	// console.log(foo.baz.bar());
+
+	// var obj={
+	// 	node1:{
+	// 		node11:{
+	// 			node111:{
+	// 				node1111:{
+	// 					node11111:{
+
+	// 					}
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// }
+	// var arr=[];
+	// function test(obj){
+	// 	for(var i in obj){
+	// 		arr.push(i);
+	// 		test(obj[i])
+	// 	}
+	// };
+	// test(obj);
+	// console.log(arr);
+
+	// for(var i in obj){
+	// 	arr.push(i);
+	// 	console.log(obj[i]);
+	// 	for(var i in obj[i]){
+	// 		arr.push(i);
+	// 	}
+	// }
+	// console.log(arr);
+
+	var b=new Array(100).join(",").split(",").map(function(value,index,array) {
+		console.log(arguments);
+		//共三个参数 值 下标 数组
+		return index+1;
+	})
+	console.log(b);
+</script>

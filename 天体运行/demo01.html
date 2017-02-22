@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="Keywords" content="关键词1,关键词2" />
+		<meta name="Description" content="描述"/>
+		<title></title>
+		<script type="text/javascript" src="js/demo01.js" ></script>
+		<style>
+		body{background: url(img/xingkong.jpg);}
+		.box{padding: 0 250px;}	
+			
+		</style>
+	</head>
+	<body>
+		<div class="box">
+		<canvas id="canvas" width="900" height="900"></canvas>
+		</div>
+		<script>
+			var can=document.getElementById("canvas");
+			var ctx=can.getContext("2d");//绘图环境，在2D环境里
+//			//绘制圆形
+//			ctx.beginPath();//开始路径
+//			ctx.arc(400,400,100,0,360,false);//设置圆形路径：圆心坐标x,y半径r
+//			//半径r，从0度绘制到360度，逆时针绘制
+//			ctx.strokeStyle="#fff";//设置触笔方法的颜色
+//			ctx.stroke();//触笔方法：绘制空心圆
+//			ctx.fillStyle="#f00";//设置填充方法的颜色
+//			ctx.fill();//填充方法
+			
+			//弧度计算公式：度*PI/180
+			//循环生成8个轨迹园
+			function drawTrack(){
+				for(var i=0;i<8;i++){
+				//绘制圆形
+				ctx.beginPath();//开始路径
+				ctx.arc(450,450,(i+1)*50,0,2*Math.PI,false);//设置圆形路径：圆心坐标x,y半径r
+				//半径r，从0度绘制到360度，逆时针绘制
+				ctx.strokeStyle="#fff";//设置触笔方法的颜色
+				ctx.stroke();//触笔方法：绘制空心圆
+				ctx.fillStyle="#f00";//设置填充方法的颜色
+				//ctx.fill();//填充方法
+				}
+			}
+			/*
+			ctx.save();//保存之前的画布内容，相当于额外开辟一个空间
+			//canvas 变化CS3中translate也有
+			ctx.translate(450,450);//设置画布的圆心坐标点
+			ctx.beginPath();
+			ctx.arc(0,0,20,0,2*Math.PI,false);
+			//设置径向渐变色
+			var color=ctx.createRadialGradient(0,0,0,0,0,20);
+			//添加颜色值
+			color.addColorStop(0,"#f00");//0 起始颜色值
+			color.addColorStop(1,"#00f");//1 结束颜色值
+			ctx.fillStyle=color;//设置填充方法的颜色
+			ctx.fill();
+			ctx.restore();//释放之前的画布内容
+			*/
+			//圆心坐标  半径 旋转周期 开始颜色  结束颜色
+			var time=0;
+			function drawStar(x,y,r,cycle,sColor,eColor){
+				
+				ctx.save();//保存之前的画布内容，相当于额外开辟一个空间
+				//canvas 变化CS3中transform也有
+				ctx.translate(450,450);//设置画布的圆心坐标点
+				ctx.rotate(time*(360/cycle)*Math.PI/180);//旋转
+				ctx.beginPath();
+				ctx.arc(x,y,r,0,2*Math.PI,false);
+				//设置径向渐变色
+				var color=ctx.createRadialGradient(x,y,0,x,y,r);
+				//添加颜色值
+				color.addColorStop(0,sColor);
+				color.addColorStop(1,eColor);
+				ctx.fillStyle=color;
+				ctx.fill();
+				ctx.restore();
+				time++;
+			}
+			setInterval(function(){			
+				ctx.clearRect(0,0,900,900);//clearRect（) 方法清空给定范围内的指定像素
+				drawTrack();
+				drawStar(0,0,30,0,"#ffff00","#ff9900");
+				drawStar(50,0,10,87,"#ffff00","#e67b00");
+				drawStar(100,0,15,224,"#ffff00","#3e67fd");
+				drawStar(150,0,25,365,"#ffff00","#b0edff");
+				drawStar(200,0,20,686,"#CEC9B6","#fef454");
+				drawStar(250,0,32,4332,"#C0A48E","#3452e4");
+				drawStar(300,0,25,10759,"#F7F9E3","#ffda20");
+				drawStar(350,0,23,30799,"#A7E1E5","#b46b26");
+				drawStar(400,0,23,59860,"#0661B2","#1E3B73");
+			},100);
+			
+		</script>
+	</body>
+</html>

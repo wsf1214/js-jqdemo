@@ -1,0 +1,88 @@
+﻿<html>
+	<head>
+		<title>DOM</title>
+		<script src="move1.js"></script>
+		<script>
+		onload=function(){
+			var div=document.getElementsByTagName("div");//获得DIV
+			var input=document.getElementsByTagName("input");//获得按钮
+			var arr=[];//存储对象
+			for(var i=0;i<div.length;i++){
+				var img = div[i].getElementsByTagName("img")[0];
+				div[i].timer=null;
+				arr.push([	parseFloat(getStyle(div[i],"left")),//arr[i][0]
+							parseFloat(getStyle(div[i],"top")),//arr[i][1]
+							getStyle(div[i],"zIndex"),//arr[i][2]
+							getStyle(img,"opacity")*100,//arr[i][3]
+							img.width])//arr[i][4]
+			}
+			//console.log(arr);//打印数组
+			//向左
+			input[0].onclick=function(){
+				arr.push(arr[0]);//把数组第一个元素加到向数组末尾
+				arr.shift();//删除数组第一个元素
+				for(var i=0;i<div.length;i++){
+				var img = div[i].getElementsByTagName("img")[0];
+					startMove(div[i],{left:arr[i][0],top:arr[i][1]})
+					div[i].style.zIndex=arr[i][2];
+					startMove(img,{opacity:arr[i][3],width:arr[i][4]});
+				}
+			}
+			//向右
+			input[1].onclick=function(){
+				arr.unshift(arr[arr.length-1]);//把数组最后一个元素加到数组头部
+				arr.pop();//删除数组最后一个元素
+				for(var i=0;i<div.length;i++){
+					var img = div[i].getElementsByTagName("img")[0];
+					startMove(div[i],{left:arr[i][0],top:arr[i][1]});
+					div[i].style.zIndex=arr[i][2];
+					startMove(img,{opacity:arr[i][3],width:arr[i][4]})
+				}
+			
+			}
+			//自动
+			setInterval(function(){
+				arr.unshift(arr[arr.length-1]);//把数组最后一个元素加到数组头部
+				arr.pop();//删除数组最后一个元素
+				for(var i=0;i<div.length;i++){
+					var img = div[i].getElementsByTagName("img")[0];
+					startMove(div[i],{left:arr[i][0],top:arr[i][1]});
+					div[i].style.zIndex=arr[i][2];
+					startMove(img,{opacity:arr[i][3],width:arr[i][4]})
+				}
+			},2000)
+		}
+		</script>
+		<style>
+		.box7{position:absolute;z-index:0;left:170px;top:150px;}
+		.box7 img{opacity:.0;}
+		.box1{position:absolute;z-index:1;left:140px;top:300px;}
+		.box1 img{opacity:.3;}
+		.box2{position:absolute;z-index:2;left:170px;top:233px;}
+		.box2 img{opacity:.6;}
+		.box3{position:absolute;z-index:3;left:200px;top:166px;}
+		.box3 img{opacity:1;}
+		.box4{position:absolute;z-index:2;left:430px;top:233px;}
+		.box4 img{opacity:.6;}
+		.box5{position:absolute;z-index:1;left:660px;top:300px;}
+		.box5 img{opacity:.3;}
+		.box6{position:absolute;z-index:0;left:400px;top:150px;}
+		.box6 img{opacity:.0;}
+		
+		</style>
+
+
+	</head>
+<body>
+<input type="button" value="左" />
+<input type="button" value="右" />
+<div class="box7"><img src="07.jpg" width="400px;"/></div>
+<div class="box1"><img src="04.jpg" width="200px;"/></div>
+<div class="box2"><img src="05.jpg" width="400px;"/></div>
+<div class="box3"><img src="06.jpg" width="600px;"/></div>
+<div class="box4"><img src="07.jpg" width="400px;"/></div>
+<div class="box5"><img src="08.jpg" width="200px;"/></div>
+<div class="box6"><img src="06.jpg" width="400px;"/></div>
+</body>
+	
+</html>
